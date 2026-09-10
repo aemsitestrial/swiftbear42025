@@ -1,10 +1,10 @@
 {
   "mappings": [
-    "/content/aem-boilerplate-xwalk/:/",
-    "/content/aem-boilerplate-xwalk/configuration:/.helix/config.json",
-    "/content/aem-boilerplate-xwalk/metadata:/metadata.json"
+    "/content/2026/37/swiftbear42025/:/",
+    "/content/2026/37/swiftbear42025/configuration:/.helix/config.json",
+    "/content/2026/37/swiftbear42025/metadata:/metadata.json"
   ],
   "includes": [
-    "/content/aem-boilerplate-xwalk/"
+    "/content/2026/37/swiftbear42025/"
   ]
 }
