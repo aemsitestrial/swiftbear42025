@@ -22,6 +22,23 @@
             "id": "teaser",
             "fields": [
                 {
+                    "component": "select",
+                    "name": "classes",
+                    "value": "",
+                    "label": "Teaser options",
+                    "valueType": "string",
+                    "options": [
+                        {
+                            "name": "Default",
+                            "value": ""
+                        },
+                        {
+                            "name": "Fullwidth",
+                            "value": "teaser--fullwidth"
+                        }
+                    ]
+                },
+                {
                     "component": "reference",
                     "valueType": "string",
                     "name": "image",
