@@ -1,0 +1,13 @@
+{
+  "status": "success",
+  "url": "https://main--swiftbear42025--aemsitestrial.aem.page/activity-page",
+  "path": "activity-page",
+  "timestamp": "2026-09-11T00:39:37.008Z",
+  "title": "Activity Page",
+  "template": "activity-page",
+  "blocks": [
+    "hero",
+    "cards",
+    "columns"
+  ]
+}

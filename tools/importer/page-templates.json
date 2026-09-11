@@ -1,0 +1,56 @@
+{
+  "metadata": {
+    "projectType": "xwalk"
+  },
+  "templates": [
+    {
+      "name": "activity-page",
+      "urls": [
+        "https://main--swiftbear42025--aemsitestrial.aem.page/activity-page"
+      ],
+      "representativeUrl": "https://main--swiftbear42025--aemsitestrial.aem.page/activity-page",
+      "description": "Activity page: hero banner, product card grid, and a two-column text+image section",
+      "urlPattern": "/*",
+      "blocks": [
+        {
+          "name": "hero",
+          "instances": [
+            ".hero.block",
+            ".hero-wrapper > .hero"
+          ]
+        },
+        {
+          "name": "cards",
+          "instances": [
+            ".cards.block",
+            ".cards-wrapper > .cards"
+          ]
+        },
+        {
+          "name": "columns",
+          "instances": [
+            ".columns.block",
+            ".columns-wrapper > .columns"
+          ]
+        }
+      ],
+      "sections": [
+        {
+          "id": "rc1",
+          "name": "main-content",
+          "selector": [
+            "main > div.section",
+            ".section.hero-container"
+          ],
+          "style": null,
+          "blocks": [
+            "hero",
+            "cards",
+            "columns"
+          ],
+          "defaultContent": []
+        }
+      ]
+    }
+  ]
+}
