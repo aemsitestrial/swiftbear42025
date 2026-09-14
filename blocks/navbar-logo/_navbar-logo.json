@@ -1,0 +1,41 @@
+{
+  "definitions": [
+    {
+      "title": "Navbar Logo",
+      "id": "navbar-logo",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Navbar Logo",
+              "model": "navbar-logo"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "navbar-logo",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Alt",
+          "value": "Site Logo"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

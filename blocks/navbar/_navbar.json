@@ -1,5 +1,6 @@
 {
-    "definitions": [{
+  "definitions": [
+    {
       "title": "Navbar",
       "id": "navbar",
       "plugins": {
@@ -13,57 +14,29 @@
           }
         }
       }
-    }],
-    "models": [
+    }
+  ],
+  "models": [
+    {
+      "id": "navbar",
+      "fields": [
         {
-            "id": "navbar",
-            "fields": [
-               {
-                    "component": "reference",
-                    "valueType": "string",
-                    "name": "image",
-                    "label": "Image",
-                    "multi": false
-                },
-                {
-                    "component": "text",
-                    "valueType": "string",
-                    "name": "imageAlt",
-                    "label": "Alt",
-                    "value": ""
-                },
-                {
-                    "component": "container",
-                    "name": "ctas",
-                    "label": "CTAs",
-                    "valueType": "object",
-                    "multi": true,
-                    "fields": [
-                        {
-                        "component": "text",
-                        "name": "ctaName",
-                        "label": "CTA Name",
-                        "value": "",
-                        "valueType": "string"
-                        },
-                        {
-                        "component": "text",
-                        "name": "ctaLink",
-                        "label": "CTA Link",
-                        "value": "",
-                        "valueType": "string"
-                        },
-                        {
-                        "component": "text",
-                        "name": "ctaTitle",
-                        "label": "CTA Title",
-                        "value": "",
-                        "valueType": "string"
-                        }
-                    ]
-                }
-            ]
+          "component": "multiselect",
+          "name": "style",
+          "label": "Style",
+          "options": [
+            {
+              "name": "Default",
+              "value": ""
+            },
+            {
+              "name": "3 Columns",
+              "value": "navbar-three-cols"
+            }
+          ]
         }
-    ],
-    "filters": []
+      ]
+    }
+  ],
+  "filters": []
 }
