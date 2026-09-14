@@ -238,34 +238,29 @@
         "label": "CTAs",
         "valueType": "object",
         "multi": true,
-        "field": {
-          "component": "container",
-          "name": "cta",
-          "label": "CTA",
-          "fields": [
-            {
-              "component": "text",
-              "valueType": "string",
-              "name": "ctaName",
-              "label": "CTA Name",
-              "value": ""
-            },
-            {
-              "component": "text",
-              "valueType": "string",
-              "name": "ctaLink",
-              "label": "CTA Link",
-              "value": ""
-            },
-            {
-              "component": "text",
-              "valueType": "string",
-              "name": "ctaTitle",
-              "label": "CTA Title",
-              "value": ""
-            }
-          ]
-        }
+        "fields": [
+          {
+            "component": "text",
+            "name": "ctaName",
+            "label": "CTA Name",
+            "value": "",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "ctaLink",
+            "label": "CTA Link",
+            "value": "",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "ctaTitle",
+            "label": "CTA Title",
+            "value": "",
+            "valueType": "string"
+          }
+        ]
       }
     ]
   },
