@@ -233,10 +233,11 @@
         "value": ""
       },
       {
-        "component": "multifield",
+        "component": "container",
         "name": "ctas",
         "label": "CTAs",
-        "valueType": "array",
+        "valueType": "object",
+        "multi": true,
         "field": {
           "component": "container",
           "name": "cta",
