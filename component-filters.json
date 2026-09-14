@@ -40,5 +40,12 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "navbar",
+    "components": [
+      "navbar-logo",
+      "navbar-links"
+    ]
   }
 ]

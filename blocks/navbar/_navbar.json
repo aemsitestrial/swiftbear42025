@@ -38,5 +38,13 @@
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+        "id": "navbar",
+        "components": [
+            "navbar-logo",
+            "navbar-links"
+        ]
+    }
+  ]
 }
