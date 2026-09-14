@@ -216,7 +216,11 @@
     ]
   },
   {
-    "id": "navbar",
+    "id": "navbar-links",
+    "fields": []
+  },
+  {
+    "id": "navbar-logo",
     "fields": [
       {
         "component": "reference",
@@ -230,35 +234,25 @@
         "valueType": "string",
         "name": "imageAlt",
         "label": "Alt",
-        "value": ""
-      },
+        "value": "Site Logo"
+      }
+    ]
+  },
+  {
+    "id": "navbar",
+    "fields": [
       {
-        "component": "container",
-        "name": "ctas",
-        "label": "CTAs",
-        "valueType": "object",
-        "multi": true,
-        "fields": [
+        "component": "multiselect",
+        "name": "style",
+        "label": "Style",
+        "options": [
           {
-            "component": "text",
-            "name": "ctaName",
-            "label": "CTA Name",
-            "value": "",
-            "valueType": "string"
+            "name": "Default",
+            "value": ""
           },
           {
-            "component": "text",
-            "name": "ctaLink",
-            "label": "CTA Link",
-            "value": "",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "ctaTitle",
-            "label": "CTA Title",
-            "value": "",
-            "valueType": "string"
+            "name": "3 Columns",
+            "value": "navbar-three-cols"
           }
         ]
       }
