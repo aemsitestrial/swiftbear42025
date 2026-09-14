@@ -219,16 +219,18 @@
     "id": "navbar",
     "fields": [
       {
-        "component": "image",
+        "component": "reference",
+        "valueType": "string",
         "name": "image",
         "label": "Image",
-        "valueType": "string"
+        "multi": false
       },
       {
         "component": "text",
+        "valueType": "string",
         "name": "imageAlt",
-        "label": "Image Alt",
-        "valueType": "string"
+        "label": "Alt",
+        "value": ""
       },
       {
         "component": "multifield",
@@ -242,21 +244,24 @@
           "fields": [
             {
               "component": "text",
+              "valueType": "string",
               "name": "ctaName",
               "label": "CTA Name",
-              "valueType": "string"
+              "value": ""
             },
             {
               "component": "text",
+              "valueType": "string",
               "name": "ctaLink",
               "label": "CTA Link",
-              "valueType": "string"
+              "value": ""
             },
             {
               "component": "text",
+              "valueType": "string",
               "name": "ctaTitle",
               "label": "CTA Title",
-              "valueType": "string"
+              "value": ""
             }
           ]
         }
