@@ -216,6 +216,18 @@
     ]
   },
   {
+    "id": "navbar",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      }
+    ]
+  },
+  {
     "id": "teaser",
     "fields": [
       {
