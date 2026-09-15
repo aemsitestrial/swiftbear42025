@@ -1,0 +1,69 @@
+{
+  "definitions": [
+    {
+      "title": "EX Navbar",
+      "id": "ex-navbar",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "EX Navbar",
+              "model": "ex-navbar"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "ex-navbar",
+      "fields": [
+        {
+            "component": "select",
+            "name": "classes",
+            "value": "",
+            "label": "Navbar Variant",
+            "valueType": "string",
+            "options": [
+                {
+                    "name": "Default",
+                    "value": ""
+                },
+                {
+                    "name": "Show Search",
+                    "value": "ex-navbar-show-search"
+                }
+            ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Site Brand",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Site Brand Alt Text"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageLink",
+          "label": "Site Brand Link"
+        },
+        {
+          "component": "richtext",
+          "name": "textContent_text",
+          "label": "Navbar Links",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
