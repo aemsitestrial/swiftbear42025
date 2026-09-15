@@ -17,7 +17,7 @@
       "columns",
       "fragment",
       "teaser",
-      "navbar"
+      "ex-navbar"
     ]
   },
   {
@@ -39,13 +39,6 @@
       "image",
       "button",
       "title"
-    ]
-  },
-  {
-    "id": "navbar",
-    "components": [
-      "navbar-logo",
-      "navbar-links"
     ]
   }
 ]
