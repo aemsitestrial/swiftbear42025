@@ -111,6 +111,17 @@ export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+
+  // if the current page IS the nav fragment being edited, hide the header block so the
+  // author isn't confused by seeing the same content duplicated (once here, once as the
+  // editable page content).
+  const currentPath = window.location.pathname.replace(/\.html$/, '');
+  if (currentPath === navPath.replace(/\.html$/, '')) {
+    const header = block.closest('header') || block;
+    header.style.display = 'none';
+    return;
+  }
+
   const fragment = await loadFragment(navPath);
 
   // decorate nav DOM
