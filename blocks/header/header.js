@@ -8,14 +8,14 @@ import { loadFragment } from '../fragment/fragment.js';
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/navbar-v2';
   const fragment = await loadFragment(navPath);
 
   // if the current page IS the nav fragment being edited/viewed, hide the header block so the
   // author isn't confused by seeing the same content duplicated (once here, once as the
   // editable page content). Compare on the last path segment (basename) because the Universal
-  // Editor loads the page at its full content path (e.g. /content/.../nav) while the fragment
-  // path is just /nav, so a full-path equality check would never match in the editor.
+  // Editor loads the page at its full content path (e.g. /content/.../navbar-v2) while the fragment
+  // path is just /navbar-v2, so a full-path equality check would never match in the editor.
   const basename = (p) => p.replace(/\.html$/, '').replace(/\/$/, '').split('/').pop();
   if (basename(window.location.pathname) === basename(navPath)) {
     const header = block.closest('header') || block;

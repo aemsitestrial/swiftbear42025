@@ -52,7 +52,8 @@
         "columns",
         "fragment",
         "teaser",
-        "ex-navbar"
+        "ex-navbar",
+        "ex-navbar-v2"
       ]
     }
   ]

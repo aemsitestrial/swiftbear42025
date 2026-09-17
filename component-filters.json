@@ -17,7 +17,8 @@
       "columns",
       "fragment",
       "teaser",
-      "ex-navbar"
+      "ex-navbar",
+      "ex-navbar-v2"
     ]
   },
   {
@@ -39,6 +40,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "ex-navbar-v2",
+    "components": [
+      "ex-navbar-subnav"
     ]
   }
 ]
