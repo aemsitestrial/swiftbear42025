@@ -148,3 +148,68 @@ main > .section > .ex-navbar-wrapper {
 		left: 100%;
 	}
 }
+
+/*
+ * Universal Editor view only.
+ *
+ * On the live site, sub menus (levels 2 and 3) are hidden overlays that only appear on hover, so
+ * an author has no way to see or select the nested links while editing. When the block is rendered
+ * inside the editor (signalled by a `data-aue-resource` ancestor) we lay the sub menus out inline
+ * and always visible so every navigation link is reachable and editable.
+ */
+[data-aue-resource] .ex-navbar-links .ex-navbar-level-2,
+[data-aue-resource] .ex-navbar-links .ex-navbar-level-3 {
+	position: static;
+	opacity: 1;
+	visibility: visible;
+	transform: none;
+	min-width: 0;
+	margin: 4px 0 4px 20px;
+	box-shadow: none;
+	transition: none;
+}
+
+/* Let the links container grow into the space left of the brand instead of shrinking to the
+   width of its widest item. */
+[data-aue-resource] .ex-navbar-links {
+	flex: 1;
+}
+
+/* Top level items stretch to fill the container width. */
+[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 > li {
+	align-self: stretch;
+}
+
+/* Keep the parent item as a normal block so the inline sub menu stacks below it. */
+[data-aue-resource] .ex-navbar-links .ex-navbar-has-children {
+	position: static;
+}
+
+/* Anchors are full-height flex rows on the live site; in the editor let them size to content so
+   the stacked sub menu items don't leave large gaps. */
+[data-aue-resource] .ex-navbar-links .ex-navbar-level-2 li a,
+[data-aue-resource] .ex-navbar-links .ex-navbar-level-3 li a {
+	height: auto;
+	line-height: 1.5;
+	padding: 4px 8px;
+}
+
+@media (width >= 900px) {
+	/* Stack the whole tree vertically in the editor so nested levels read as an outline rather
+	   than overlapping fly-outs. */
+	[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 > li {
+		border-right: none;
+		padding-right: 0;
+	}
+
+	[data-aue-resource] .ex-navbar-links .ex-navbar-level-3 {
+		top: auto;
+		left: auto;
+	}
+}
