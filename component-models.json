@@ -180,6 +180,64 @@
     ]
   },
   {
+    "id": "ex-navbar-subnav",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "textContent_text",
+        "label": "Subnavigation Links",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "ex-navbar-v2",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "value": "",
+        "label": "Navbar Variant",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Show Search",
+            "value": "ex-navbar-v2-show-search"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Site Brand",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Site Brand Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageLink",
+        "label": "Site Brand Link"
+      },
+      {
+        "component": "richtext",
+        "name": "textContent_text",
+        "label": "Navbar Links",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "ex-navbar",
     "fields": [
       {

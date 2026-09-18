@@ -1,0 +1,33 @@
+{
+  "definitions": [
+    {
+      "title": "EX Navbar Subnavigation",
+      "id": "ex-navbar-subnav",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "EX Navbar Subnavigation",
+              "model": "ex-navbar-subnav"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "ex-navbar-subnav",
+      "fields": [
+        {
+          "component": "richtext",
+          "name": "textContent_text",
+          "label": "Subnavigation Links",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
