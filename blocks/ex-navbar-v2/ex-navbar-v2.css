@@ -5,6 +5,7 @@ main > .section > .ex-navbar-v2-wrapper {
 	background-color: #f5eee8;
 	max-width: unset;
 }
+
 .ex-navbar-v2 {
 	display: flex;
 	align-items: center;
@@ -17,6 +18,7 @@ main > .section > .ex-navbar-v2-wrapper {
 .ex-navbar-brand a {
 	display: inline-block;
 }
+
 .ex-navbar-brand img {
 	width: 100%;
 	max-width: 180px;
@@ -25,52 +27,181 @@ main > .section > .ex-navbar-v2-wrapper {
 }
 
 .ex-navbar-links ul {
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
-.ex-navbar-links ul li {
+
+/* Top level list. */
+.ex-navbar-links > div > ul,
+.ex-navbar-links .ex-navbar-level-1 {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.ex-navbar-links .ex-navbar-level-1 > li {
 	border-right: 1px solid #d9d9d9;
 	padding-right: 20px;
 }
-.ex-navbar-links ul li:last-child {
+
+.ex-navbar-links .ex-navbar-level-1 > li:last-child {
 	border-right: none;
 	padding-right: 0;
 }
-.ex-navbar-links ul li a {
+
+/* Shared anchor styling across all levels. */
+.ex-navbar-links li a {
+	display: block;
 	color: #000;
 	height: 40px;
 	line-height: 40px;
 	text-decoration: none;
 	position: relative;
+	white-space: nowrap;
 }
-.ex-navbar-links ul li a:hover {
+
+.ex-navbar-links li a:hover {
 	color: #da1020;
 }
-.ex-navbar-links ul li a::after {
+
+/* Underline indicator only on top level links. */
+.ex-navbar-links .ex-navbar-level-1 > li > a::after {
 	content: "";
 	position: absolute;
-	background: rgba(0, 0, 0, 0);
+	background: rgb(0 0 0 / 0%);
 	left: 0;
-	bottom: -9px;
+	bottom: 0;
 	width: 100%;
 	height: 2px;
 	transition: background-color .1s ease-out;
 }
-.ex-navbar-links ul li a:hover::after {
+
+.ex-navbar-links .ex-navbar-level-1 > li > a:hover::after {
 	background-color: #da1020;
 }
 
-/*media query*/
+/* Parent items that reveal a sub menu. */
+.ex-navbar-links .ex-navbar-has-children {
+	position: relative;
+}
+
+/* Sub menus (levels 2 and 3) are hidden until their parent is hovered/focused. */
+.ex-navbar-links .ex-navbar-level-2,
+.ex-navbar-links .ex-navbar-level-3 {
+	display: block;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	min-width: 200px;
+	margin: 0;
+	padding: 8px 0;
+	background-color: #fff;
+	border: 1px solid #d9d9d9;
+	border-radius: 4px;
+	box-shadow: 0 6px 16px rgb(0 0 0 / 12%);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(4px);
+	transition: opacity .15s ease-out, transform .15s ease-out, visibility .15s;
+	z-index: 100;
+}
+
+.ex-navbar-links .ex-navbar-level-2 li a,
+.ex-navbar-links .ex-navbar-level-3 li a {
+	padding: 0 16px;
+}
+
+.ex-navbar-links .ex-navbar-level-2 li a:hover,
+.ex-navbar-links .ex-navbar-level-3 li a:hover {
+	background-color: #f5eee8;
+}
+
+/* Reveal the immediate sub menu on hover or keyboard focus. */
+.ex-navbar-links .ex-navbar-has-children:hover > ul,
+.ex-navbar-links .ex-navbar-has-children:focus-within > ul {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+/* media query */
 @media (width >= 900px) {
-	.ex-navbar {
+	.ex-navbar-v2 {
 		padding-inline: 32px;
 	}
 
-	.ex-navbar-links ul {
+	.ex-navbar-links .ex-navbar-level-1 {
 		flex-direction: row;
+		align-items: center;
+	}
+
+	/* Level 2 opens directly below its parent. */
+	.ex-navbar-links .ex-navbar-level-2 {
+		top: 100%;
+		left: 0;
+	}
+
+	/* Level 3 flies out to the right of its level 2 parent. */
+	.ex-navbar-links .ex-navbar-level-3 {
+		top: -9px;
+		left: 100%;
+	}
+}
+
+/*
+ * Universal Editor view only.
+ *
+ * On the live site, sub menus (levels 2 and 3) are hidden overlays that only appear on hover, so
+ * an author has no way to see or select the nested links while editing. When the block is rendered
+ * inside the editor (signalled by a `data-aue-resource` ancestor) we lay the sub menus out inline
+ * and always visible so every navigation link is reachable and editable.
+ */
+[data-aue-resource] .ex-navbar-links .ex-navbar-level-2,
+[data-aue-resource] .ex-navbar-links .ex-navbar-level-3 {
+	position: static;
+	opacity: 1;
+	visibility: visible;
+	transform: none;
+	min-width: 0;
+	margin: 4px 0 4px 20px;
+	box-shadow: none;
+	transition: none;
+}
+
+[data-aue-resource] .ex-navbar-links {
+	flex: 1;
+}
+
+[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 > li {
+	align-self: stretch;
+}
+
+[data-aue-resource] .ex-navbar-links .ex-navbar-has-children {
+	position: static;
+}
+
+[data-aue-resource] .ex-navbar-links .ex-navbar-level-2 li a,
+[data-aue-resource] .ex-navbar-links .ex-navbar-level-3 li a {
+	height: auto;
+	line-height: 1.5;
+	padding: 4px 8px;
+}
+
+@media (width >= 900px) {
+	[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 > li {
+		border-right: none;
+		padding-right: 0;
+	}
+
+	[data-aue-resource] .ex-navbar-links .ex-navbar-level-3 {
+		top: auto;
+		left: auto;
 	}
 }
