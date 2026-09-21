@@ -21,6 +21,13 @@
       "id": "ex-navbar-subnav",
       "fields": [
         {
+          "component": "text",
+          "name": "parentLabel",
+          "label": "Parent Link Label",
+          "description": "The exact text of the top level navigation link this sub navigation belongs to (e.g. \"About Us\").",
+          "valueType": "string"
+        },
+        {
           "component": "richtext",
           "name": "textContent_text",
           "label": "Subnavigation Links",
