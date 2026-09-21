@@ -47,8 +47,14 @@ export default function decorate(block) {
     links.classList.add('ex-navbar-links');
     links.dataset.blockName = 'ex-navbar-links';
 
+    // In the Universal Editor the block is instrumented with data-aue-* attributes. There we keep
+    // each ex-navbar-subnav as its own default full-width row (see CSS) so authors can select and
+    // edit each one directly; the sub navigation is only injected into its parent link on the
+    // published side.
+    const isEditor = !!block.closest('[data-aue-resource]');
+
     const topList = links.querySelector('ul');
-    if (topList) {
+    if (topList && !isEditor) {
       const topItems = [...topList.children].filter((li) => li.tagName === 'LI');
       const normalize = (text) => (text || '').trim().toLowerCase();
 
@@ -120,5 +126,18 @@ export default function decorate(block) {
       });
     };
     annotate(topList, 1);
+
+    if (isEditor) {
+      // Keep each subnav as its own full-width row in the editor. Tag the rows and clean up the
+      // button treatment the core decorateButtons pass applies to their links.
+      subnavRows.forEach((row) => {
+        row.classList.add('ex-navbar-subnav-row');
+        row.dataset.blockName = 'ex-navbar-subnav';
+        row.querySelectorAll('a.button').forEach((a) => a.classList.remove('button'));
+        row.querySelectorAll('p.button-container').forEach((p) => {
+          p.replaceWith(...p.childNodes);
+        });
+      });
+    }
   }
 }

@@ -173,6 +173,29 @@ main > .section > .ex-navbar-v2-wrapper {
 	flex: 1;
 }
 
+/* Let the subnav rows wrap onto their own line below the brand and links. */
+[data-aue-resource].ex-navbar-v2 {
+	flex-wrap: wrap;
+}
+
+/* Each ex-navbar-subnav stays a full width row of its own in the editor. */
+[data-aue-resource] .ex-navbar-subnav-row {
+	flex: 0 0 100%;
+	width: 100%;
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px solid #d9d9d9;
+}
+
+[data-aue-resource] .ex-navbar-v2 .ex-navbar-subnav-row ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+}
+
 [data-aue-resource] .ex-navbar-links .ex-navbar-level-1 > li {
 	align-self: stretch;
 }
