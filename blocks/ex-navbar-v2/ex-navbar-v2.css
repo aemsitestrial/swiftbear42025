@@ -173,6 +173,47 @@ main > .section > .ex-navbar-v2-wrapper {
 	flex: 1;
 }
 
+/* Keep the top level navbar links inline (next to each other) in the editor, regardless of the
+   editor canvas width. */
+[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 {
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+/* Let the subnav rows wrap onto their own line below the brand and links. */
+[data-aue-resource].ex-navbar-v2 {
+	flex-wrap: wrap;
+}
+
+/* Each ex-navbar-subnav stays a full width row of its own in the editor. */
+[data-aue-resource] .ex-navbar-subnav-row {
+	flex: 0 0 100%;
+	width: 100%;
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px solid #d9d9d9;
+}
+
+/* Subnav links stack vertically (block) so each one reads on its own line. */
+[data-aue-resource] .ex-navbar-v2 .ex-navbar-subnav-row ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	display: block;
+}
+
+/* Indent nested subnav items so the hierarchy is clear in the editor. */
+[data-aue-resource] .ex-navbar-v2 .ex-navbar-subnav-row ul ul {
+	margin-left: 20px;
+}
+
+[data-aue-resource] .ex-navbar-v2 .ex-navbar-subnav-row li a {
+	display: block;
+	height: auto;
+	line-height: 1.6;
+}
+
 [data-aue-resource] .ex-navbar-links .ex-navbar-level-1 > li {
 	align-self: stretch;
 }
@@ -189,17 +230,6 @@ main > .section > .ex-navbar-v2-wrapper {
 }
 
 @media (width >= 900px) {
-	[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 {
-		flex-direction: column;
-		align-items: flex-start;
-		gap: 8px;
-	}
-
-	[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 > li {
-		border-right: none;
-		padding-right: 0;
-	}
-
 	[data-aue-resource] .ex-navbar-links .ex-navbar-level-3 {
 		top: auto;
 		left: auto;

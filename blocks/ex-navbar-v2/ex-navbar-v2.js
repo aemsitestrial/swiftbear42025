@@ -1,3 +1,5 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 export default function decorate(block) {
   const rows = [...block.children];
   const brand = rows[0];
@@ -45,8 +47,14 @@ export default function decorate(block) {
     links.classList.add('ex-navbar-links');
     links.dataset.blockName = 'ex-navbar-links';
 
+    // In the Universal Editor the block is instrumented with data-aue-* attributes. There we keep
+    // each ex-navbar-subnav as its own default full-width row (see CSS) so authors can select and
+    // edit each one directly; the sub navigation is only injected into its parent link on the
+    // published side.
+    const isEditor = !!block.closest('[data-aue-resource]');
+
     const topList = links.querySelector('ul');
-    if (topList) {
+    if (topList && !isEditor) {
       const topItems = [...topList.children].filter((li) => li.tagName === 'LI');
       const normalize = (text) => (text || '').trim().toLowerCase();
 
@@ -58,29 +66,38 @@ export default function decorate(block) {
       // 3 levels of navigation.
       subnavRows.forEach((row, index) => {
         const subList = row.querySelector('ul');
-        if (subList) {
-          // The parent label is the row's text outside of the sub navigation list.
-          const labelSource = row.cloneNode(true);
-          labelSource.querySelectorAll('ul').forEach((ul) => ul.remove());
-          const label = normalize(labelSource.textContent);
+        // A freshly inserted subnav has no list yet. Leave the row untouched so the Universal
+        // Editor keeps its data-aue-* handle and the author can still select and populate it.
+        if (!subList) return;
 
-          let targetItem;
-          if (label) {
-            targetItem = topItems.find((li) => {
-              const anchor = li.querySelector(':scope > a');
-              return normalize(anchor?.textContent) === label;
-            });
-          }
-          // Fall back to positional mapping when there is no usable label match.
-          if (!targetItem) {
-            targetItem = topItems[index];
-          }
+        // The parent label is the row's text outside of the sub navigation list.
+        const labelSource = row.cloneNode(true);
+        labelSource.querySelectorAll('ul').forEach((ul) => ul.remove());
+        const label = normalize(labelSource.textContent);
 
-          if (targetItem) {
-            targetItem.appendChild(subList);
-          }
+        let targetItem;
+        if (label) {
+          targetItem = topItems.find((li) => {
+            const anchor = li.querySelector(':scope > a');
+            return normalize(anchor?.textContent) === label;
+          });
         }
-        // Discard the now empty subnav row wrapper.
+        // Fall back to positional mapping when there is no usable label match.
+        if (!targetItem) {
+          targetItem = topItems[index];
+        }
+
+        // If nothing matched (more subnavs than top level links), leave the row in place rather
+        // than silently discarding the authored content and its editor instrumentation.
+        if (!targetItem) return;
+
+        // Carry the editor instrumentation from the subnav row onto the list that survives so the
+        // Universal Editor keeps tracking this child block. Without this the child block loses its
+        // data-aue-* handle when the row is removed and disappears from the editor.
+        moveInstrumentation(row, subList);
+        targetItem.appendChild(subList);
+
+        // The row wrapper is now empty; remove it since its instrumentation lives on the list.
         row.remove();
       });
     }
@@ -109,5 +126,18 @@ export default function decorate(block) {
       });
     };
     annotate(topList, 1);
+
+    if (isEditor) {
+      // Keep each subnav as its own full-width row in the editor. Tag the rows and clean up the
+      // button treatment the core decorateButtons pass applies to their links.
+      subnavRows.forEach((row) => {
+        row.classList.add('ex-navbar-subnav-row');
+        row.dataset.blockName = 'ex-navbar-subnav';
+        row.querySelectorAll('a.button').forEach((a) => a.classList.remove('button'));
+        row.querySelectorAll('p.button-container').forEach((p) => {
+          p.replaceWith(...p.childNodes);
+        });
+      });
+    }
   }
 }
