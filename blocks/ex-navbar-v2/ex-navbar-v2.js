@@ -9,6 +9,18 @@ export default function decorate(block) {
   // top level link at the same position and becomes that link's sub navigation.
   const subnavRows = rows.slice(3);
 
+  // Editor context is per-block, not per-page. This block only carries the Universal Editor's
+  // data-aue-* instrumentation when it is the editable page content (i.e. the navbar-v2 fragment
+  // page referenced by header.js as the navPath). When the same navbar is injected read-only into
+  // other pages by header.js it is fetched plain HTML with no instrumentation. We mark the block
+  // with a class so the editor-only CSS targets this exact instance instead of relying on a broad
+  // `[data-aue-resource]` ancestor selector, which would leak editor styling onto the header-loaded
+  // navbar whenever any other page is opened in the editor.
+  const isEditor = !!block.closest('[data-aue-resource]');
+  if (isEditor) {
+    block.classList.add('ex-navbar-v2-editor');
+  }
+
   if (brand) {
     brand.classList.add('ex-navbar-brand');
     brand.dataset.blockName = 'ex-navbar-brand';
@@ -50,9 +62,7 @@ export default function decorate(block) {
     // In the Universal Editor the block is instrumented with data-aue-* attributes. There we keep
     // each ex-navbar-subnav as its own default full-width row (see CSS) so authors can select and
     // edit each one directly; the sub navigation is only injected into its parent link on the
-    // published side.
-    const isEditor = !!block.closest('[data-aue-resource]');
-
+    // published side. `isEditor` is computed once above from this block's own instrumentation.
     const topList = links.querySelector('ul');
     if (topList && !isEditor) {
       const topItems = [...topList.children].filter((li) => li.tagName === 'LI');
