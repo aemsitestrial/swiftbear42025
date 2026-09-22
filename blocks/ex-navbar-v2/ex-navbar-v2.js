@@ -6,8 +6,21 @@ export default function decorate(block) {
   const brandLink = rows[1];
   const links = rows[2];
   // Every row after the main links list is an ex-navbar-subnav child block. Each one maps to the
-  // top level link at the same position and becomes that link's sub navigation.
+  // top level link whose text matches its authored "Parent Link Label" and becomes that link's
+  // sub navigation.
   const subnavRows = rows.slice(3);
+
+  // Editor context is per-block, not per-page. This block only carries the Universal Editor's
+  // data-aue-* instrumentation when it is the editable page content (i.e. the navbar-v2 fragment
+  // page referenced by header.js as the navPath). When the same navbar is injected read-only into
+  // other pages by header.js it is fetched plain HTML with no instrumentation. We mark the block
+  // with a class so the editor-only CSS targets this exact instance instead of relying on a broad
+  // `[data-aue-resource]` ancestor selector, which would leak editor styling onto the header-loaded
+  // navbar whenever any other page is opened in the editor.
+  const isEditor = !!block.closest('[data-aue-resource]');
+  if (isEditor) {
+    block.classList.add('ex-navbar-v2-editor');
+  }
 
   if (brand) {
     brand.classList.add('ex-navbar-brand');
@@ -50,9 +63,7 @@ export default function decorate(block) {
     // In the Universal Editor the block is instrumented with data-aue-* attributes. There we keep
     // each ex-navbar-subnav as its own default full-width row (see CSS) so authors can select and
     // edit each one directly; the sub navigation is only injected into its parent link on the
-    // published side.
-    const isEditor = !!block.closest('[data-aue-resource]');
-
+    // published side. `isEditor` is computed once above from this block's own instrumentation.
     const topList = links.querySelector('ul');
     if (topList && !isEditor) {
       const topItems = [...topList.children].filter((li) => li.tagName === 'LI');
@@ -60,11 +71,10 @@ export default function decorate(block) {
 
       // Match each ex-navbar-subnav block to a top level link by label. The subnav authors a
       // "Parent Link Label" holding the exact text of the top level link it belongs to; we attach
-      // the subnav's list to the item whose link text matches. When no label is authored (or it
-      // matches nothing) we fall back to mapping by position. The subnav's list becomes that
+      // the subnav's list to the item whose link text matches. The subnav's list becomes that
       // link's sub navigation, and any list nested within it becomes a third level, giving up to
       // 3 levels of navigation.
-      subnavRows.forEach((row, index) => {
+      subnavRows.forEach((row) => {
         const subList = row.querySelector('ul');
         // A freshly inserted subnav has no list yet. Leave the row untouched so the Universal
         // Editor keeps its data-aue-* handle and the author can still select and populate it.
@@ -75,21 +85,26 @@ export default function decorate(block) {
         labelSource.querySelectorAll('ul').forEach((ul) => ul.remove());
         const label = normalize(labelSource.textContent);
 
-        let targetItem;
-        if (label) {
-          targetItem = topItems.find((li) => {
-            const anchor = li.querySelector(':scope > a');
-            return normalize(anchor?.textContent) === label;
-          });
-        }
-        // Fall back to positional mapping when there is no usable label match.
-        if (!targetItem) {
-          targetItem = topItems[index];
+        // With no Parent Link Label authored there is nothing to map this subnav to, so it should
+        // not be rendered. Remove the row entirely (published side has no editor instrumentation
+        // to preserve).
+        if (!label) {
+          row.remove();
+          return;
         }
 
-        // If nothing matched (more subnavs than top level links), leave the row in place rather
-        // than silently discarding the authored content and its editor instrumentation.
-        if (!targetItem) return;
+        // Map strictly by label: attach to the top level link whose text matches.
+        const targetItem = topItems.find((li) => {
+          const anchor = li.querySelector(':scope > a');
+          return normalize(anchor?.textContent) === label;
+        });
+
+        // No top level link matches this label. Drop the subnav rather than render it detached
+        // from any parent.
+        if (!targetItem) {
+          row.remove();
+          return;
+        }
 
         // Carry the editor instrumentation from the subnav row onto the list that survives so the
         // Universal Editor keeps tracking this child block. Without this the child block loses its
