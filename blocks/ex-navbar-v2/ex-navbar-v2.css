@@ -129,7 +129,8 @@ main > .section > .ex-navbar-v2-wrapper {
 	white-space: nowrap;
 }
 
-.ex-navbar-links li a:hover {
+.ex-navbar-links li a:hover, 
+.ex-navbar-links li a:focus {
 	color: #da1020;
 }
 
@@ -144,7 +145,8 @@ main > .section > .ex-navbar-v2-wrapper {
 	transition: background-color .1s ease-out;
 }
 
-.ex-navbar-links .ex-navbar-level-1 > li > a:hover::after {
+.ex-navbar-links .ex-navbar-level-1 > li > a:hover::after, 
+.ex-navbar-links .ex-navbar-level-1 > li > a:focus::after {
 	background-color: #da1020;
 }
 
