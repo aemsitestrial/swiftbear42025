@@ -26,13 +26,82 @@ main > .section > .ex-navbar-v2-wrapper {
 	top: 4px;
 }
 
+.ex-navbar-hamburger {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	margin-left: auto;
+	border: none;
+	background: transparent;
+	color: #000;
+	cursor: pointer;
+	position: relative;
+	right: -10px;
+}
+
+.ex-navbar-hamburger:focus,
+.ex-navbar-hamburger:hover {
+	border-radius: 0;
+	background-color: transparent;
+}
+
+.ex-navbar-hamburger-box {
+	position: relative;
+	display: block;
+	width: 24px;
+	height: 18px;
+}
+
+.ex-navbar-hamburger-inner,
+.ex-navbar-hamburger-inner::before,
+.ex-navbar-hamburger-inner::after {
+	position: absolute;
+	left: 0;
+	width: 24px;
+	height: 2px;
+	background-color: currentcolor;
+	border-radius: 1px;
+	transition: transform .2s ease, opacity .2s ease, top .2s ease;
+}
+
+.ex-navbar-hamburger-inner {
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.ex-navbar-hamburger-inner::before {
+	content: "";
+	top: -8px;
+}
+
+.ex-navbar-hamburger-inner::after {
+	content: "";
+	top: 8px;
+}
+
+.ex-navbar-v2-drawer-open .ex-navbar-hamburger-inner {
+	background-color: transparent;
+}
+
+.ex-navbar-v2-drawer-open .ex-navbar-hamburger-inner::before {
+	top: 0;
+	transform: rotate(45deg);
+}
+
+.ex-navbar-v2-drawer-open .ex-navbar-hamburger-inner::after {
+	top: 0;
+	transform: rotate(-45deg);
+}
+
 .ex-navbar-links ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
 
-/* Top level list. */
 .ex-navbar-links > div > ul,
 .ex-navbar-links .ex-navbar-level-1 {
 	display: flex;
@@ -50,7 +119,6 @@ main > .section > .ex-navbar-v2-wrapper {
 	padding-right: 0;
 }
 
-/* Shared anchor styling across all levels. */
 .ex-navbar-links li a {
 	display: block;
 	color: #000;
@@ -65,7 +133,6 @@ main > .section > .ex-navbar-v2-wrapper {
 	color: #da1020;
 }
 
-/* Underline indicator only on top level links. */
 .ex-navbar-links .ex-navbar-level-1 > li > a::after {
 	content: "";
 	position: absolute;
@@ -81,12 +148,10 @@ main > .section > .ex-navbar-v2-wrapper {
 	background-color: #da1020;
 }
 
-/* Parent items that reveal a sub menu. */
 .ex-navbar-links .ex-navbar-has-children {
 	position: relative;
 }
 
-/* Chevron indicator appended to any link that has a sub navigation. */
 .ex-navbar-links .ex-navbar-chevron {
 	display: inline-block;
 	width: 0;
@@ -97,13 +162,11 @@ main > .section > .ex-navbar-v2-wrapper {
 	transition: transform .15s ease-out;
 }
 
-/* Down chevron for top level links (sub menu drops below). */
 .ex-navbar-links .ex-navbar-chevron-down {
 	border-width: 5px 4px 0;
 	border-color: currentcolor transparent transparent;
 }
 
-/* Right chevron for deeper links (sub menu flies out to the side). */
 .ex-navbar-links .ex-navbar-chevron-right {
 	border-width: 4px 0 4px 5px;
 	border-color: transparent transparent transparent currentcolor;
@@ -113,12 +176,10 @@ main > .section > .ex-navbar-v2-wrapper {
 	transform: translateY(-50%);
 }
 
-/* Rotate the down chevron to point up while its menu is open. */
 .ex-navbar-links .ex-navbar-open > a .ex-navbar-chevron-down {
 	transform: rotate(180deg);
 }
 
-/* Sub menus (levels 2 and 3) are hidden until their parent is opened via click/Enter. */
 .ex-navbar-links .ex-navbar-level-2,
 .ex-navbar-links .ex-navbar-level-3 {
 	display: block;
@@ -149,14 +210,125 @@ main > .section > .ex-navbar-v2-wrapper {
 	background-color: #f5eee8;
 }
 
-/* Reveal the immediate sub menu only when its parent is opened via click/Enter. */
 .ex-navbar-links .ex-navbar-has-children.ex-navbar-open > ul {
 	opacity: 1;
 	visibility: visible;
 	transform: translateY(0);
 }
 
-/* media query */
+@media (width < 900px) {
+	.ex-navbar-hamburger {
+		display: inline-flex;
+	}
+
+	.ex-navbar-v2 {
+		position: relative;
+	}
+
+	.ex-navbar-links {
+		position: fixed;
+		top: 80px;
+		left: 0;
+		z-index: 200;
+		display: flex;
+		width: calc(100dvw - 48px);
+		height: calc(100dvh - 80px);
+		flex-direction: column;
+		padding: 24px;
+		background-color: #fff;
+		overflow-y: auto;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-8px);
+
+		transition: opacity .2s ease-out, transform .2s ease-out, visibility 0s linear .2s;
+	}
+
+	.ex-navbar-v2-drawer-open .ex-navbar-links {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+		transition: opacity .2s ease-out, transform .2s ease-out, visibility 0s linear 0s;
+	}
+
+	.ex-navbar-v2-drawer-open .ex-navbar-hamburger {
+		position: relative;
+		z-index: 201;
+	}
+
+	.ex-navbar-links .ex-navbar-level-1 {
+		flex-direction: column;
+		gap: 0;
+		width: 100%;
+	}
+
+	.ex-navbar-links .ex-navbar-level-1 > li {
+		border-right: none;
+		padding-right: 0;
+		border-bottom: 1px solid #d9d9d9;
+	}
+
+	.ex-navbar-links li a {
+		height: auto;
+		min-height: 48px;
+		line-height: 1.4;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.ex-navbar-links .ex-navbar-has-children.ex-navbar-open > a {
+		color: #da1020;
+	}
+
+	.ex-navbar-links .ex-navbar-has-children.ex-navbar-open > a::after {
+		background-color: #da1020;
+	}
+
+	.ex-navbar-links .ex-navbar-level-2,
+	.ex-navbar-links .ex-navbar-level-3 {
+		position: static;
+		display: none;
+		min-width: 0;
+		margin: 0;
+		padding: 0 0 0 16px;
+		background: transparent;
+		border: none;
+		border-radius: 0;
+		box-shadow: none;
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+		transition: none;
+	}
+
+	.ex-navbar-links .ex-navbar-level-2 li a, 
+	.ex-navbar-links .ex-navbar-level-3 li a {
+		padding-right: 0;
+	}
+
+	.ex-navbar-links .ex-navbar-level-2 li a:hover, 
+	.ex-navbar-links .ex-navbar-level-3 li a:hover {
+		background-color: transparent;
+	}
+
+	.ex-navbar-links .ex-navbar-has-children.ex-navbar-open > ul {
+		display: block;
+	}
+
+	.ex-navbar-links .ex-navbar-chevron-right {
+		position: static;
+		margin-left: auto;
+		transform: none;
+		border-width: 5px 4px 0;
+    	border-color: currentcolor transparent transparent;
+	}
+
+	.ex-navbar-links .ex-navbar-has-children.ex-navbar-open > a .ex-navbar-chevron-right {
+		transform: rotate(180deg);
+	}
+}
+
 @media (width >= 900px) {
 	.ex-navbar-v2 {
 		padding-inline: 32px;
@@ -167,35 +339,17 @@ main > .section > .ex-navbar-v2-wrapper {
 		align-items: center;
 	}
 
-	/* Level 2 opens directly below its parent. */
 	.ex-navbar-links .ex-navbar-level-2 {
 		top: 100%;
 		left: 0;
 	}
 
-	/* Level 3 flies out to the right of its level 2 parent. */
 	.ex-navbar-links .ex-navbar-level-3 {
 		top: -9px;
 		left: 100%;
 	}
 }
 
-/*
- * Universal Editor view only.
- *
- * These rules are scoped to the `.ex-navbar-v2-editor` class, which ex-navbar-v2.js adds ONLY when
- * this block instance is itself instrumented by the Universal Editor (i.e. it is the editable page
- * content on the navbar-v2 fragment page referenced as the navPath in header.js). We deliberately
- * do NOT use a broad `[data-aue-resource]` ancestor selector: on every other page header.js injects
- * this navbar as read-only fetched plain HTML, and that copy must keep the published layout even
- * when the page is opened in the editor. A `[data-aue-resource]` ancestor selector would leak the
- * editor layout below onto that header-loaded navbar; the marker class matches only the true
- * editable instance, keeping the JS and CSS editor checks in agreement.
- *
- * On the live site, sub menus (levels 2 and 3) are hidden overlays that only appear on hover, so
- * an author has no way to see or select the nested links while editing. In the editor we lay the
- * sub menus out inline and always visible so every navigation link is reachable and editable.
- */
 .ex-navbar-v2-editor .ex-navbar-links .ex-navbar-level-2,
 .ex-navbar-v2-editor .ex-navbar-links .ex-navbar-level-3 {
 	position: static;
@@ -212,20 +366,16 @@ main > .section > .ex-navbar-v2-wrapper {
 	flex: 1;
 }
 
-/* Keep the top level navbar links inline (next to each other) in the editor, regardless of the
-   editor canvas width. */
 .ex-navbar-v2-editor .ex-navbar-links .ex-navbar-level-1 {
 	flex-flow: row wrap;
 	align-items: center;
 	justify-content: flex-end;
 }
 
-/* Let the subnav rows wrap onto their own line below the brand and links. */
 .ex-navbar-v2-editor {
 	flex-wrap: wrap;
 }
 
-/* Each ex-navbar-subnav stays a full width row of its own in the editor. */
 .ex-navbar-v2-editor .ex-navbar-subnav-row {
 	flex: 0 0 100%;
 	width: 100%;
@@ -234,9 +384,6 @@ main > .section > .ex-navbar-v2-wrapper {
 	border-top: 1px solid #d9d9d9;
 }
 
-/* Subnav links stack vertically (block) so each one reads on its own line. The block class is
-   compounded (.ex-navbar-v2.ex-navbar-v2-editor) purely to keep these editor overrides at or above
-   the specificity of the earlier hover rules that also target `ul`/`li a`, so they reliably win. */
 .ex-navbar-v2.ex-navbar-v2-editor .ex-navbar-subnav-row ul {
 	list-style-type: none;
 	margin: 0;
@@ -244,7 +391,6 @@ main > .section > .ex-navbar-v2-wrapper {
 	display: block;
 }
 
-/* Indent nested subnav items so the hierarchy is clear in the editor. */
 .ex-navbar-v2.ex-navbar-v2-editor .ex-navbar-subnav-row ul ul {
 	margin-left: 20px;
 }
