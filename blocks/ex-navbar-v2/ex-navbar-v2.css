@@ -86,7 +86,39 @@ main > .section > .ex-navbar-v2-wrapper {
 	position: relative;
 }
 
-/* Sub menus (levels 2 and 3) are hidden until their parent is hovered/focused. */
+/* Chevron indicator appended to any link that has a sub navigation. */
+.ex-navbar-links .ex-navbar-chevron {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 6px;
+	vertical-align: middle;
+	border-style: solid;
+	transition: transform .15s ease-out;
+}
+
+/* Down chevron for top level links (sub menu drops below). */
+.ex-navbar-links .ex-navbar-chevron-down {
+	border-width: 5px 4px 0;
+	border-color: currentcolor transparent transparent;
+}
+
+/* Right chevron for deeper links (sub menu flies out to the side). */
+.ex-navbar-links .ex-navbar-chevron-right {
+	border-width: 4px 0 4px 5px;
+	border-color: transparent transparent transparent currentcolor;
+	position: absolute;
+	right: 16px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+/* Rotate the down chevron to point up while its menu is open. */
+.ex-navbar-links .ex-navbar-open > a .ex-navbar-chevron-down {
+	transform: rotate(180deg);
+}
+
+/* Sub menus (levels 2 and 3) are hidden until their parent is opened via click/Enter. */
 .ex-navbar-links .ex-navbar-level-2,
 .ex-navbar-links .ex-navbar-level-3 {
 	display: block;
@@ -117,9 +149,8 @@ main > .section > .ex-navbar-v2-wrapper {
 	background-color: #f5eee8;
 }
 
-/* Reveal the immediate sub menu on hover or keyboard focus. */
-.ex-navbar-links .ex-navbar-has-children:hover > ul,
-.ex-navbar-links .ex-navbar-has-children:focus-within > ul {
+/* Reveal the immediate sub menu only when its parent is opened via click/Enter. */
+.ex-navbar-links .ex-navbar-has-children.ex-navbar-open > ul {
 	opacity: 1;
 	visibility: visible;
 	transform: translateY(0);

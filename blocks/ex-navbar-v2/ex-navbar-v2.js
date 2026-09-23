@@ -126,8 +126,11 @@ export default function decorate(block) {
       p.replaceWith(...p.childNodes);
     });
 
-    // Annotate each list with its nesting level (up to 3) and flag items that have a sub-menu,
-    // so the CSS can reveal the nested navigation on hover.
+    // Annotate each list with its nesting level (up to 3) and flag items that have a sub-menu.
+    // For accessibility the nested navigation is NOT revealed on hover; it only opens when the
+    // author clicks or presses Enter on the parent link (see setupToggle below). A chevron is
+    // added to each parent link to signal that a sub navigation exists: a down chevron on the top
+    // level links, and a right chevron on deeper levels whose fly-out opens to the side.
     const annotate = (list, level) => {
       if (!list || level > 3) return;
       list.classList.add('ex-navbar-level', `ex-navbar-level-${level}`);
@@ -136,11 +139,84 @@ export default function decorate(block) {
         const subList = li.querySelector(':scope > ul');
         if (subList) {
           li.classList.add('ex-navbar-has-children');
+
+          // Add the chevron indicator to this parent's own link (not links in the sub list).
+          const anchor = li.querySelector(':scope > a');
+          if (anchor && !anchor.querySelector('.ex-navbar-chevron')) {
+            const chevron = document.createElement('span');
+            chevron.className = `ex-navbar-chevron ex-navbar-chevron-${level === 1 ? 'down' : 'right'}`;
+            chevron.setAttribute('aria-hidden', 'true');
+            anchor.appendChild(chevron);
+          }
+
           annotate(subList, level + 1);
         }
       });
     };
     annotate(topList, 1);
+
+    // Reveal a sub navigation only on click or Enter of its parent link, for accessibility.
+    // The parent link acts as a disclosure control: activating it toggles its sub menu open or
+    // closed instead of navigating. `aria-haspopup`/`aria-expanded` describe the state to
+    // assistive technology.
+    const closeMenu = (li) => {
+      if (!li) return;
+      li.classList.remove('ex-navbar-open');
+      const anchor = li.querySelector(':scope > a');
+      if (anchor) anchor.setAttribute('aria-expanded', 'false');
+      // Collapse any descendants that were left open as well.
+      li.querySelectorAll('.ex-navbar-open').forEach((child) => {
+        child.classList.remove('ex-navbar-open');
+        const childAnchor = child.querySelector(':scope > a');
+        if (childAnchor) childAnchor.setAttribute('aria-expanded', 'false');
+      });
+    };
+
+    const setupToggle = (li) => {
+      const anchor = li.querySelector(':scope > a');
+      if (!anchor) return;
+      anchor.setAttribute('aria-haspopup', 'true');
+      anchor.setAttribute('aria-expanded', 'false');
+
+      const toggle = (event) => {
+        event.preventDefault();
+        const willOpen = !li.classList.contains('ex-navbar-open');
+
+        // Close sibling menus at the same level so only one branch is open at a time.
+        [...li.parentElement.children].forEach((sibling) => {
+          if (sibling !== li) closeMenu(sibling);
+        });
+
+        if (willOpen) {
+          li.classList.add('ex-navbar-open');
+          anchor.setAttribute('aria-expanded', 'true');
+        } else {
+          closeMenu(li);
+        }
+      };
+
+      // A click on an anchor also fires when the user presses Enter while it is focused, so this
+      // single handler covers both click and Enter. Space is handled explicitly because anchors
+      // do not activate on Space by default.
+      anchor.addEventListener('click', toggle);
+      anchor.addEventListener('keydown', (event) => {
+        if (event.key === ' ') toggle(event);
+      });
+    };
+
+    links.querySelectorAll('.ex-navbar-has-children').forEach(setupToggle);
+
+    // Close every open menu when the user clicks outside the navigation or presses Escape.
+    document.addEventListener('click', (event) => {
+      if (!links.contains(event.target)) {
+        links.querySelectorAll('.ex-navbar-open').forEach(closeMenu);
+      }
+    });
+    links.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        links.querySelectorAll('.ex-navbar-open').forEach(closeMenu);
+      }
+    });
 
     if (isEditor) {
       // Keep each subnav as its own full-width row in the editor. Tag the rows and clean up the
