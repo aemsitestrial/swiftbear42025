@@ -15,8 +15,28 @@ main > .section > .ex-navbar-v2-wrapper {
 	padding-inline: 24px;
 }
 
-.ex-navbar-v2 a:focus {
+.ex-navbar-v2 a:focus,
+.ex-navbar-links li button:focus {
 	outline: 3px dotted #57595d;
+}
+
+.ex-navbar-links li button {
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	font: inherit;
+	color: inherit;
+	text-align: left;
+	cursor: pointer;
+	border-radius: 0;
+	box-sizing: content-box;
+	appearance: none;
+}
+
+.ex-navbar-links li button:hover,
+.ex-navbar-links li button:focus {
+	background: transparent;
 }
 
 .ex-navbar-brand a {
@@ -123,7 +143,8 @@ main > .section > .ex-navbar-v2-wrapper {
 	padding-right: 0;
 }
 
-.ex-navbar-links li a {
+.ex-navbar-links li a,
+.ex-navbar-links li button {
 	display: block;
 	color: #000;
 	height: 40px;
@@ -133,12 +154,15 @@ main > .section > .ex-navbar-v2-wrapper {
 	white-space: nowrap;
 }
 
-.ex-navbar-links li a:hover, 
-.ex-navbar-links li a:focus {
+.ex-navbar-links li a:hover,
+.ex-navbar-links li a:focus,
+.ex-navbar-links li button:hover,
+.ex-navbar-links li button:focus {
 	color: #da1020;
 }
 
-.ex-navbar-links .ex-navbar-level-1 > li > a::after {
+.ex-navbar-links .ex-navbar-level-1 > li > a::after,
+.ex-navbar-links .ex-navbar-level-1 > li > button::after {
 	content: "";
 	position: absolute;
 	background: rgb(0 0 0 / 0%);
@@ -149,8 +173,10 @@ main > .section > .ex-navbar-v2-wrapper {
 	transition: background-color .1s ease-out;
 }
 
-.ex-navbar-links .ex-navbar-level-1 > li > a:hover::after, 
-.ex-navbar-links .ex-navbar-level-1 > li > a:focus::after {
+.ex-navbar-links .ex-navbar-level-1 > li > a:hover::after,
+.ex-navbar-links .ex-navbar-level-1 > li > a:focus::after,
+.ex-navbar-links .ex-navbar-level-1 > li > button:hover::after,
+.ex-navbar-links .ex-navbar-level-1 > li > button:focus::after {
 	background-color: #da1020;
 }
 
@@ -207,12 +233,18 @@ main > .section > .ex-navbar-v2-wrapper {
 }
 
 .ex-navbar-links .ex-navbar-level-2 li a,
-.ex-navbar-links .ex-navbar-level-3 li a {
+.ex-navbar-links .ex-navbar-level-3 li a,
+.ex-navbar-links .ex-navbar-level-2 li button,
+.ex-navbar-links .ex-navbar-level-3 li button {
+	width: 100%;
+	box-sizing: border-box;
 	padding: 0 16px;
 }
 
 .ex-navbar-links .ex-navbar-level-2 li a:hover,
-.ex-navbar-links .ex-navbar-level-3 li a:hover {
+.ex-navbar-links .ex-navbar-level-3 li a:hover,
+.ex-navbar-links .ex-navbar-level-2 li button:hover,
+.ex-navbar-links .ex-navbar-level-3 li button:hover {
 	background-color: #f5eee8;
 }
 
@@ -246,7 +278,6 @@ main > .section > .ex-navbar-v2-wrapper {
 		opacity: 0;
 		visibility: hidden;
 		transform: translateY(-8px);
-
 		transition: opacity .2s ease-out, transform .2s ease-out, visibility 0s linear .2s;
 	}
 
@@ -274,7 +305,8 @@ main > .section > .ex-navbar-v2-wrapper {
 		border-bottom: 1px solid #d9d9d9;
 	}
 
-	.ex-navbar-links li a {
+	.ex-navbar-links li a,
+	.ex-navbar-links li button {
 		height: auto;
 		min-height: 48px;
 		line-height: 1.4;
@@ -283,11 +315,13 @@ main > .section > .ex-navbar-v2-wrapper {
 		align-items: center;
 	}
 
-	.ex-navbar-links .ex-navbar-has-children.ex-navbar-open > a {
+	.ex-navbar-links .ex-navbar-has-children.ex-navbar-open > a,
+	.ex-navbar-links .ex-navbar-has-children.ex-navbar-open > button {
 		color: #da1020;
 	}
 
-	.ex-navbar-links .ex-navbar-has-children.ex-navbar-open > a::after {
+	.ex-navbar-links .ex-navbar-has-children.ex-navbar-open > a::after,
+	.ex-navbar-links .ex-navbar-has-children.ex-navbar-open > button::after {
 		background-color: #da1020;
 	}
 
@@ -308,13 +342,17 @@ main > .section > .ex-navbar-v2-wrapper {
 		transition: none;
 	}
 
-	.ex-navbar-links .ex-navbar-level-2 li a, 
-	.ex-navbar-links .ex-navbar-level-3 li a {
+	.ex-navbar-links .ex-navbar-level-2 li a,
+	.ex-navbar-links .ex-navbar-level-3 li a,
+	.ex-navbar-links .ex-navbar-level-2 li button,
+	.ex-navbar-links .ex-navbar-level-3 li button {
 		padding-right: 0;
 	}
 
-	.ex-navbar-links .ex-navbar-level-2 li a:hover, 
-	.ex-navbar-links .ex-navbar-level-3 li a:hover {
+	.ex-navbar-links .ex-navbar-level-2 li a:hover,
+	.ex-navbar-links .ex-navbar-level-3 li a:hover,
+	.ex-navbar-links .ex-navbar-level-2 li button:hover,
+	.ex-navbar-links .ex-navbar-level-3 li button:hover {
 		background-color: transparent;
 	}
 
@@ -356,6 +394,7 @@ main > .section > .ex-navbar-v2-wrapper {
 	}
 }
 
+/* Editor styles for the ex-navbar-v2 block */
 .ex-navbar-v2-editor .ex-navbar-links .ex-navbar-level-2,
 .ex-navbar-v2-editor .ex-navbar-links .ex-navbar-level-3 {
 	position: static;
