@@ -169,6 +169,17 @@ export default function decorate(block) {
       });
     };
 
+    // Open a parent item's sub navigation, first closing any sibling that is open so only one
+    // branch is expanded at a time.
+    const openMenu = (li) => {
+      const anchor = li.querySelector(':scope > a');
+      [...li.parentElement.children].forEach((sibling) => {
+        if (sibling !== li) closeMenu(sibling);
+      });
+      li.classList.add('ex-navbar-open');
+      if (anchor) anchor.setAttribute('aria-expanded', 'true');
+    };
+
     const setupToggle = (li) => {
       const anchor = li.querySelector(':scope > a');
       if (!anchor) return;
@@ -177,19 +188,8 @@ export default function decorate(block) {
 
       const toggle = (event) => {
         event.preventDefault();
-        const willOpen = !li.classList.contains('ex-navbar-open');
-
-        // Close sibling menus at the same level so only one branch is open at a time.
-        [...li.parentElement.children].forEach((sibling) => {
-          if (sibling !== li) closeMenu(sibling);
-        });
-
-        if (willOpen) {
-          li.classList.add('ex-navbar-open');
-          anchor.setAttribute('aria-expanded', 'true');
-        } else {
-          closeMenu(li);
-        }
+        if (li.classList.contains('ex-navbar-open')) closeMenu(li);
+        else openMenu(li);
       };
 
       // A click on an anchor also fires when the user presses Enter while it is focused, so this
@@ -202,6 +202,180 @@ export default function decorate(block) {
     };
 
     links.querySelectorAll('.ex-navbar-has-children').forEach(setupToggle);
+
+    // Arrow-key navigation (WAI-ARIA menu keyboard pattern). All links stay in the natural Tab
+    // order (this is a disclosure navigation menu, not a roving-tabindex menubar); arrow keys are a
+    // supplementary way to move around. The layout is orientation-aware: on desktop the top level
+    // is a horizontal row, so Left/Right move between top links and Down opens a sub menu; inside a
+    // fly-out (and everywhere in the mobile drawer, where the top level is a vertical accordion)
+    // Up/Down move between items, Right opens a nested sub menu and Left closes back to the parent.
+    const desktopMq = window.matchMedia('(min-width: 900px)');
+    const listLevel = (list) => {
+      if (list.classList.contains('ex-navbar-level-1')) return 1;
+      if (list.classList.contains('ex-navbar-level-2')) return 2;
+      if (list.classList.contains('ex-navbar-level-3')) return 3;
+      return 0;
+    };
+    const itemsOf = (list) => [...list.children].filter((c) => c.tagName === 'LI');
+    const focusAnchor = (li) => {
+      const a = li?.querySelector(':scope > a');
+      if (a) a.focus();
+    };
+    // Move focus to the item at `index`, wrapping around the ends of the list.
+    const focusAt = (items, index) => focusAnchor(items[(index + items.length) % items.length]);
+    const focusChild = (li, which) => {
+      const sub = li.querySelector(':scope > ul');
+      if (!sub) return;
+      const children = itemsOf(sub);
+      if (!children.length) return;
+      const target = which === 'last' ? children[children.length - 1] : children[0];
+      // The fly-out transitions in from visibility:hidden and can only take focus once it is
+      // visible, so defer the focus to the next frame (matching the drawer's open behaviour).
+      requestAnimationFrame(() => focusAnchor(target));
+    };
+
+    // The brand/logo link sits to the left of the navigation links in the desktop top row. Pull it
+    // into the arrow-key sequence so Left/Right (and Home/End) move between the brand and the links
+    // as one continuous row rather than the brand only being reachable by Tab.
+    const brandAnchor = brand?.querySelector('a');
+    const topAnchorSequence = () => {
+      const seq = [];
+      if (brandAnchor) seq.push(brandAnchor);
+      if (topList) {
+        itemsOf(topList).forEach((topLi) => {
+          const a = topLi.querySelector(':scope > a');
+          if (a) seq.push(a);
+        });
+      }
+      return seq;
+    };
+    // Sibling movement across a flat row of anchors, wrapping at the ends. Returns true when it
+    // handled the key so the caller can stop. Used for the shared brand + top-links row on desktop.
+    // `key` is passed explicitly so callers can remap (e.g. treat Down as Right from the brand).
+    const moveAcrossRow = (event, seq, key = event.key) => {
+      const i = seq.indexOf(event.target.closest('a'));
+      if (i < 0) return false;
+      switch (key) {
+        case 'ArrowRight':
+          event.preventDefault();
+          seq[(i + 1) % seq.length].focus();
+          return true;
+        case 'ArrowLeft':
+          event.preventDefault();
+          seq[(i - 1 + seq.length) % seq.length].focus();
+          return true;
+        case 'Home':
+          event.preventDefault();
+          seq[0].focus();
+          return true;
+        case 'End':
+          event.preventDefault();
+          seq[seq.length - 1].focus();
+          return true;
+        default:
+          return false;
+      }
+    };
+
+    // Listen on the whole block (not just the links list) so key presses on the brand link are
+    // covered too.
+    block.addEventListener('keydown', (event) => {
+      const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
+      if (!keys.includes(event.key)) return;
+
+      const anchor = event.target.closest('a');
+      if (!anchor || !block.contains(anchor)) return;
+
+      const desktop = desktopMq.matches;
+
+      // The brand link only participates in arrow navigation on desktop, where it shares the top
+      // row with the links. It has no sub menu of its own, so from the brand every direction just
+      // moves along the row: Right/Down step to the first link, Left/Up wrap to the last. Mapping
+      // the vertical keys too means whichever arrow the user reaches for moves focus into the links
+      // rather than doing nothing. On mobile the brand lives in the top bar outside the drawer's
+      // focus trap and stays out of the arrow sequence.
+      if (brandAnchor && anchor === brandAnchor) {
+        if (desktop) {
+          const rowKey = { ArrowDown: 'ArrowRight', ArrowUp: 'ArrowLeft' }[event.key] || event.key;
+          moveAcrossRow(event, topAnchorSequence(), rowKey);
+        }
+        return;
+      }
+
+      if (!links.contains(anchor)) return;
+      const li = anchor.closest('li');
+      const list = li?.parentElement;
+      if (!list) return;
+      const level = listLevel(list);
+      if (!level) return;
+
+      const items = itemsOf(list);
+      const index = items.indexOf(li);
+      const hasChildren = li.classList.contains('ex-navbar-has-children');
+      // The top level is horizontal only on desktop; in the mobile drawer it stacks vertically.
+      const topHorizontal = level === 1 && desktop;
+
+      // On the desktop top row, stepping between siblings spans the brand + top links as one row;
+      // delegate those keys to moveAcrossRow. Below the top level (and on mobile) movement stays
+      // confined to the current list, handled by the switch below.
+      if (topHorizontal && moveAcrossRow(event, topAnchorSequence())) return;
+
+      // Keys that step to the next/previous sibling depend on the list's orientation.
+      const nextKey = topHorizontal ? 'ArrowRight' : 'ArrowDown';
+      const prevKey = topHorizontal ? 'ArrowLeft' : 'ArrowUp';
+      // The key that steps into a sub menu (the perpendicular axis of the parent list). It only
+      // moves focus into a sub menu that is ALREADY open; it does NOT open a closed one. Opening a
+      // sub navigation is reserved for Enter/Space (see setupToggle) so the arrow keys never reveal
+      // hidden content on their own.
+      const enterKey = topHorizontal ? 'ArrowDown' : 'ArrowRight';
+      // The key that closes back to the parent (only meaningful below the top level, or in the
+      // vertical drawer where the top level is an accordion).
+      const closeKey = topHorizontal ? 'ArrowUp' : 'ArrowLeft';
+
+      switch (event.key) {
+        case nextKey:
+          event.preventDefault();
+          focusAt(items, index + 1);
+          break;
+        case prevKey:
+          event.preventDefault();
+          focusAt(items, index - 1);
+          break;
+        case 'Home':
+          event.preventDefault();
+          focusAt(items, 0);
+          break;
+        case 'End':
+          event.preventDefault();
+          focusAt(items, items.length - 1);
+          break;
+        case enterKey:
+          // Step into the sub navigation only if it is already open (opened via Enter/Space).
+          // Never open a closed sub menu with an arrow key.
+          if (hasChildren && li.classList.contains('ex-navbar-open')) {
+            event.preventDefault();
+            focusChild(li, 'first');
+          }
+          break;
+        case closeKey:
+          if (level > 1) {
+            // Collapse this sub menu and return focus to the parent item that owns it.
+            event.preventDefault();
+            const parentLi = list.closest('li');
+            if (parentLi) {
+              closeMenu(parentLi);
+              focusAnchor(parentLi);
+            }
+          } else if (li.classList.contains('ex-navbar-open')) {
+            // Top-level accordion item in the mobile drawer: just collapse it in place.
+            event.preventDefault();
+            closeMenu(li);
+          }
+          break;
+        default:
+          break;
+      }
+    });
 
     // Close every open menu when the user clicks outside the navigation or presses Escape.
     document.addEventListener('click', (event) => {

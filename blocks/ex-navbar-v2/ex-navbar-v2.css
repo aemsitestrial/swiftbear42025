@@ -15,6 +15,10 @@ main > .section > .ex-navbar-v2-wrapper {
 	padding-inline: 24px;
 }
 
+.ex-navbar-v2 a:focus {
+	outline: 3px dotted #57595d;
+}
+
 .ex-navbar-brand a {
 	display: inline-block;
 }
