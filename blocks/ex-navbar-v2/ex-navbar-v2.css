@@ -309,6 +309,7 @@ main > .section > .ex-navbar-v2-wrapper {
 	.ex-navbar-links li button {
 		height: auto;
 		min-height: 48px;
+		width: 100%;
 		line-height: 1.4;
 		display: flex;
 		justify-content: space-between;

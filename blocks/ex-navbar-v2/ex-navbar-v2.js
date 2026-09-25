@@ -360,6 +360,7 @@ export default function decorate(block) {
 
       let lastFocused = null;
       const isOpen = () => block.classList.contains('ex-navbar-v2-drawer-open');
+      let closeDrawer;
 
       const onKeydown = (event) => {
         if (event.key === 'Escape') {
@@ -392,11 +393,10 @@ export default function decorate(block) {
         links.setAttribute('aria-label', 'Main navigation');
         document.body.style.overflow = 'hidden';
         document.addEventListener('keydown', onKeydown, true);
-        const firstLink = links.querySelector(FOCUSABLE);
-        if (firstLink) requestAnimationFrame(() => firstLink.focus());
+        if (document.activeElement !== hamburger) hamburger.focus();
       };
 
-      const closeDrawer = ({ returnFocus = true } = {}) => {
+      closeDrawer = ({ returnFocus = true } = {}) => {
         if (!isOpen()) return;
         block.classList.remove('ex-navbar-v2-drawer-open');
         hamburger.setAttribute('aria-expanded', 'false');
