@@ -180,6 +180,10 @@
     ]
   },
   {
+    "id": "ex-banner",
+    "fields": []
+  },
+  {
     "id": "ex-navbar-subnav",
     "fields": [
       {
