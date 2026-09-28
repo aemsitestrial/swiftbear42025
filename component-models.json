@@ -181,7 +181,44 @@
   },
   {
     "id": "ex-banner",
-    "fields": []
+    "fields": [
+      {
+        "component": "text",
+        "name": "bannerIcon",
+        "label": "Banner Icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "bannerHeading",
+        "label": "Banner Heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "bannerMessage",
+        "label": "Banner Message",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "bannerAction_linkText",
+        "label": "Banner Action",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "bannerAction_link",
+        "label": "Banner Action Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "bannerAction_icon",
+        "label": "Banner Action Icon",
+        "valueType": "string"
+      }
+    ]
   },
   {
     "id": "ex-navbar-subnav",
