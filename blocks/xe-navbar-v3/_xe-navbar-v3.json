@@ -22,21 +22,21 @@
       "id": "xe-navbar-v3",
       "fields": [
         {
-            "component": "select",
-            "name": "classes",
-            "value": "",
-            "label": "Navbar Variant",
-            "valueType": "string",
-            "options": [
-                {
-                    "name": "Default",
-                    "value": ""
-                },
-                {
-                    "name": "Show Search",
-                    "value": "xe-navbar-v3-show-search"
-                }
-            ]
+          "component": "select",
+          "name": "classes",
+          "value": "",
+          "label": "Navbar Variant",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default",
+              "value": ""
+            },
+            {
+              "name": "Show Search",
+              "value": "xe-navbar-v3-show-search"
+            }
+          ]
         },
         {
           "component": "reference",
@@ -58,11 +58,11 @@
           "label": "Site Brand Link"
         },
         {
-          "component": "reference",
-          "valueType": "string",
-          "name": "link",
-          "label": "Site Link",
-          "multi": false
+          "component": "aem-content",
+          "name": "links",
+          "label": "Site Links",
+          "description": "Select pages from your site. Each page name becomes the link text and its child pages become the subnavigation.",
+          "multi": true
         }
       ]
     }

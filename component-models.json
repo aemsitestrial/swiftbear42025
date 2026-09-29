@@ -416,11 +416,11 @@
         "label": "Site Brand Link"
       },
       {
-        "component": "reference",
-        "valueType": "string",
-        "name": "link",
-        "label": "Site Link",
-        "multi": false
+        "component": "aem-content",
+        "name": "links",
+        "label": "Site Links",
+        "description": "Select pages from your site. Each page name becomes the link text and its child pages become the subnavigation.",
+        "multi": true
       }
     ]
   },
