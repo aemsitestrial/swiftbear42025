@@ -1,0 +1,407 @@
+.xe-navbar-v3-wrapper,
+main > .section > .xe-navbar-v3-wrapper {
+	margin: 0;
+	padding: 12px 0;
+	background-color: #f5eee8;
+	max-width: unset;
+}
+
+.xe-navbar-v3 {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding-inline: 24px;
+}
+
+.xe-navbar-v3 a:focus,
+.xe-navbar-links li button:focus {
+	outline: 3px dotted #57595d;
+}
+
+.xe-navbar-links li button {
+	margin: 0;
+	padding: 0;
+	border: none;
+	background: transparent;
+	font: inherit;
+	color: inherit;
+	text-align: left;
+	cursor: pointer;
+	border-radius: 0;
+	box-sizing: content-box;
+	appearance: none;
+}
+
+.xe-navbar-links li button:hover,
+.xe-navbar-links li button:focus {
+	background: transparent;
+}
+
+.xe-navbar-brand a {
+	display: inline-block;
+}
+
+.xe-navbar-brand img {
+	width: 100%;
+	max-width: 180px;
+	position: relative;
+	top: 4px;
+}
+
+.xe-navbar-hamburger {
+	display: none;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	padding: 0;
+	margin-left: auto;
+	border: none;
+	background: transparent;
+	color: #000;
+	cursor: pointer;
+	position: relative;
+	right: -10px;
+}
+
+.xe-navbar-hamburger:focus,
+.xe-navbar-hamburger:hover {
+	border-radius: 0;
+	background-color: transparent;
+}
+
+.xe-navbar-hamburger-box {
+	position: relative;
+	display: block;
+	width: 24px;
+	height: 18px;
+}
+
+.xe-navbar-hamburger-inner,
+.xe-navbar-hamburger-inner::before,
+.xe-navbar-hamburger-inner::after {
+	position: absolute;
+	left: 0;
+	width: 24px;
+	height: 2px;
+	background-color: currentcolor;
+	border-radius: 1px;
+	transition: transform .2s ease, opacity .2s ease, top .2s ease;
+}
+
+.xe-navbar-hamburger-inner {
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.xe-navbar-hamburger-inner::before {
+	content: "";
+	top: -8px;
+}
+
+.xe-navbar-hamburger-inner::after {
+	content: "";
+	top: 8px;
+}
+
+.xe-navbar-v3-drawer-open .xe-navbar-hamburger-inner {
+	background-color: transparent;
+}
+
+.xe-navbar-v3-drawer-open .xe-navbar-hamburger-inner::before {
+	top: 0;
+	transform: rotate(45deg);
+}
+
+.xe-navbar-v3-drawer-open .xe-navbar-hamburger-inner::after {
+	top: 0;
+	transform: rotate(-45deg);
+}
+
+.xe-navbar-links ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.xe-navbar-links > div > ul,
+.xe-navbar-links .xe-navbar-level-1 {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+.xe-navbar-links .xe-navbar-level-1 > li {
+	border-right: 1px solid #d9d9d9;
+	padding-right: 20px;
+}
+
+.xe-navbar-links .xe-navbar-level-1 > li:last-child {
+	border-right: none;
+	padding-right: 0;
+}
+
+.xe-navbar-links li a,
+.xe-navbar-links li button {
+	display: block;
+	color: #000;
+	height: 40px;
+	line-height: 40px;
+	text-decoration: none;
+	position: relative;
+	white-space: nowrap;
+}
+
+.xe-navbar-links li a:hover,
+.xe-navbar-links li a:focus,
+.xe-navbar-links li button:hover,
+.xe-navbar-links li button:focus {
+	color: #da1020;
+}
+
+.xe-navbar-links .xe-navbar-level-1 > li > a::after,
+.xe-navbar-links .xe-navbar-level-1 > li > button::after {
+	content: "";
+	position: absolute;
+	background: rgb(0 0 0 / 0%);
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 2px;
+	transition: background-color .1s ease-out;
+}
+
+.xe-navbar-links .xe-navbar-level-1 > li > a:hover::after,
+.xe-navbar-links .xe-navbar-level-1 > li > a:focus::after,
+.xe-navbar-links .xe-navbar-level-1 > li > button:hover::after,
+.xe-navbar-links .xe-navbar-level-1 > li > button:focus::after {
+	background-color: #da1020;
+}
+
+.xe-navbar-links .xe-navbar-has-children {
+	position: relative;
+}
+
+.xe-navbar-links .xe-navbar-chevron {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 6px;
+	vertical-align: middle;
+	border-style: solid;
+	transition: transform .15s ease-out;
+}
+
+.xe-navbar-links .xe-navbar-chevron-down {
+	border-width: 5px 4px 0;
+	border-color: currentcolor transparent transparent;
+}
+
+.xe-navbar-links .xe-navbar-chevron-right {
+	border-width: 4px 0 4px 5px;
+	border-color: transparent transparent transparent currentcolor;
+	position: absolute;
+	right: 16px;
+	top: 50%;
+	transform: translateY(-50%);
+}
+
+.xe-navbar-links .xe-navbar-open > a .xe-navbar-chevron-down {
+	transform: rotate(180deg);
+}
+
+.xe-navbar-links .xe-navbar-level-2,
+.xe-navbar-links .xe-navbar-level-3 {
+	display: block;
+	position: absolute;
+	top: 100%;
+	left: 0;
+	min-width: 200px;
+	margin: 0;
+	padding: 8px 0;
+	background-color: #fff;
+	border: 1px solid #d9d9d9;
+	border-radius: 4px;
+	box-shadow: 0 6px 16px rgb(0 0 0 / 12%);
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(4px);
+	transition: opacity .15s ease-out, transform .15s ease-out, visibility .15s;
+	z-index: 100;
+}
+
+.xe-navbar-links .xe-navbar-level-2 li a,
+.xe-navbar-links .xe-navbar-level-3 li a,
+.xe-navbar-links .xe-navbar-level-2 li button,
+.xe-navbar-links .xe-navbar-level-3 li button {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 16px;
+}
+
+.xe-navbar-links .xe-navbar-level-2 li a:hover,
+.xe-navbar-links .xe-navbar-level-3 li a:hover,
+.xe-navbar-links .xe-navbar-level-2 li button:hover,
+.xe-navbar-links .xe-navbar-level-3 li button:hover {
+	background-color: #f5eee8;
+}
+
+.xe-navbar-links .xe-navbar-has-children.xe-navbar-open > ul {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0);
+}
+
+@media (width < 900px) {
+	.xe-navbar-hamburger {
+		display: inline-flex;
+	}
+
+	.xe-navbar-v3 {
+		position: relative;
+	}
+
+	.xe-navbar-links {
+		position: fixed;
+		top: 80px;
+		left: 0;
+		z-index: 200;
+		display: flex;
+		width: calc(100dvw - 48px);
+		height: calc(100dvh - 80px);
+		flex-direction: column;
+		padding: 24px;
+		background-color: #fff;
+		overflow-y: auto;
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(-8px);
+		transition: opacity .2s ease-out, transform .2s ease-out, visibility 0s linear .2s;
+	}
+
+	.xe-navbar-v3-drawer-open .xe-navbar-links {
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
+		transition: opacity .2s ease-out, transform .2s ease-out, visibility 0s linear 0s;
+	}
+
+	.xe-navbar-v3-drawer-open .xe-navbar-hamburger {
+		position: relative;
+		z-index: 201;
+	}
+
+	.xe-navbar-links .xe-navbar-level-1 {
+		flex-direction: column;
+		gap: 0;
+		width: 100%;
+	}
+
+	.xe-navbar-links .xe-navbar-level-1 > li {
+		border-right: none;
+		padding-right: 0;
+		border-bottom: 1px solid #d9d9d9;
+	}
+
+	.xe-navbar-links li a,
+	.xe-navbar-links li button {
+		height: auto;
+		min-height: 48px;
+		width: 100%;
+		line-height: 1.4;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.xe-navbar-links .xe-navbar-has-children.xe-navbar-open > a,
+	.xe-navbar-links .xe-navbar-has-children.xe-navbar-open > button {
+		color: #da1020;
+	}
+
+	.xe-navbar-links .xe-navbar-has-children.xe-navbar-open > a::after,
+	.xe-navbar-links .xe-navbar-has-children.xe-navbar-open > button::after {
+		background-color: #da1020;
+	}
+
+	.xe-navbar-links .xe-navbar-level-2,
+	.xe-navbar-links .xe-navbar-level-3 {
+		position: static;
+		display: none;
+		min-width: 0;
+		margin: 0;
+		padding: 0 0 0 16px;
+		background: transparent;
+		border: none;
+		border-radius: 0;
+		box-shadow: none;
+		opacity: 1;
+		visibility: visible;
+		transform: none;
+		transition: none;
+	}
+
+	.xe-navbar-links .xe-navbar-level-2 li a,
+	.xe-navbar-links .xe-navbar-level-3 li a,
+	.xe-navbar-links .xe-navbar-level-2 li button,
+	.xe-navbar-links .xe-navbar-level-3 li button {
+		padding-right: 0;
+	}
+
+	.xe-navbar-links .xe-navbar-level-2 li a:hover,
+	.xe-navbar-links .xe-navbar-level-3 li a:hover,
+	.xe-navbar-links .xe-navbar-level-2 li button:hover,
+	.xe-navbar-links .xe-navbar-level-3 li button:hover {
+		background-color: transparent;
+	}
+
+	.xe-navbar-links .xe-navbar-has-children.xe-navbar-open > ul {
+		display: block;
+	}
+
+	.xe-navbar-links .xe-navbar-chevron-right {
+		position: static;
+		margin-left: auto;
+		transform: none;
+		border-width: 5px 4px 0;
+    	border-color: currentcolor transparent transparent;
+	}
+
+	.xe-navbar-links .xe-navbar-has-children.xe-navbar-open > a .xe-navbar-chevron-right {
+		transform: rotate(180deg);
+	}
+}
+
+@media (width >= 900px) {
+	.xe-navbar-v3 {
+		padding-inline: 32px;
+	}
+
+	.xe-navbar-links .xe-navbar-level-1 {
+		flex-direction: row;
+		align-items: center;
+	}
+
+	.xe-navbar-links .xe-navbar-level-2 {
+		top: 100%;
+		left: 0;
+	}
+
+	.xe-navbar-links .xe-navbar-level-3 {
+		top: -9px;
+		left: 100%;
+	}
+}
+
+/* Editor styles for the xe-navbar-v3 block. Subnavigation is not rendered in the editor. */
+.xe-navbar-v3-editor .xe-navbar-links {
+	flex: 1;
+}
+
+.xe-navbar-v3-editor .xe-navbar-links .xe-navbar-level-1 {
+	flex-flow: row wrap;
+	align-items: center;
+	justify-content: flex-end;
+}

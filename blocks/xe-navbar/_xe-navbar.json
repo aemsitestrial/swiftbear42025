@@ -1,15 +1,15 @@
 {
   "definitions": [
     {
-      "title": "EX Navbar",
-      "id": "ex-navbar",
+      "title": "XE Navbar",
+      "id": "xe-navbar",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "EX Navbar",
-              "model": "ex-navbar"
+              "name": "XE Navbar",
+              "model": "xe-navbar"
             }
           }
         }
@@ -18,7 +18,7 @@
   ],
   "models": [
     {
-      "id": "ex-navbar",
+      "id": "xe-navbar",
       "fields": [
         {
             "component": "select",
@@ -33,7 +33,7 @@
                 },
                 {
                     "name": "Show Search",
-                    "value": "ex-navbar-show-search"
+                    "value": "xe-navbar-show-search"
                 }
             ]
         },

@@ -17,9 +17,10 @@
       "columns",
       "fragment",
       "teaser",
-      "ex-banner",
-      "ex-navbar",
-      "ex-navbar-v2"
+      "xe-banner",
+      "xe-navbar",
+      "xe-navbar-v2",
+      "xe-navbar-v3"
     ]
   },
   {
@@ -44,9 +45,9 @@
     ]
   },
   {
-    "id": "ex-navbar-v2",
+    "id": "xe-navbar-v2",
     "components": [
-      "ex-navbar-subnav"
+      "xe-navbar-subnav"
     ]
   }
 ]

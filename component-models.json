@@ -180,159 +180,6 @@
     ]
   },
   {
-    "id": "ex-banner",
-    "fields": [
-      {
-        "component": "text",
-        "name": "bannerIcon",
-        "label": "Banner Icon",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "bannerHeading",
-        "label": "Banner Heading",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "bannerMessage",
-        "label": "Banner Message",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "bannerAction_linkText",
-        "label": "Banner Action",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "bannerAction_link",
-        "label": "Banner Action Link",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "bannerAction_icon",
-        "label": "Banner Action Icon",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "ex-navbar-subnav",
-    "fields": [
-      {
-        "component": "text",
-        "name": "parentLabel",
-        "label": "Parent Link Label",
-        "description": "The exact text of the top level navigation link this sub navigation belongs to (e.g. \"About Us\").",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "textContent_text",
-        "label": "Subnavigation Links",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "ex-navbar-v2",
-    "fields": [
-      {
-        "component": "select",
-        "name": "classes",
-        "value": "",
-        "label": "Navbar Variant",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Default",
-            "value": ""
-          },
-          {
-            "name": "Show Search",
-            "value": "ex-navbar-v2-show-search"
-          }
-        ]
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Site Brand",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Site Brand Alt Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageLink",
-        "label": "Site Brand Link"
-      },
-      {
-        "component": "richtext",
-        "name": "textContent_text",
-        "label": "Navbar Links",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "ex-navbar",
-    "fields": [
-      {
-        "component": "select",
-        "name": "classes",
-        "value": "",
-        "label": "Navbar Variant",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Default",
-            "value": ""
-          },
-          {
-            "name": "Show Search",
-            "value": "ex-navbar-show-search"
-          }
-        ]
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Site Brand",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Site Brand Alt Text"
-      },
-      {
-        "component": "text",
-        "valueType": "string",
-        "name": "imageLink",
-        "label": "Site Brand Link"
-      },
-      {
-        "component": "richtext",
-        "name": "textContent_text",
-        "label": "Navbar Links",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "fragment",
     "fields": [
       {
@@ -419,6 +266,207 @@
         "component": "text",
         "name": "textContent_ctaText",
         "label": "CTA label",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "xe-banner",
+    "fields": [
+      {
+        "component": "text",
+        "name": "bannerIcon",
+        "label": "Banner Icon",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "bannerHeading",
+        "label": "Banner Heading",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "bannerMessage",
+        "label": "Banner Message",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "bannerAction_linkText",
+        "label": "Banner Action",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "bannerAction_link",
+        "label": "Banner Action Link",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "bannerAction_icon",
+        "label": "Banner Action Icon",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "xe-navbar-subnav",
+    "fields": [
+      {
+        "component": "text",
+        "name": "parentLabel",
+        "label": "Parent Link Label",
+        "description": "The exact text of the top level navigation link this sub navigation belongs to (e.g. \"About Us\").",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "textContent_text",
+        "label": "Subnavigation Links",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "xe-navbar-v2",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "value": "",
+        "label": "Navbar Variant",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Show Search",
+            "value": "xe-navbar-v2-show-search"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Site Brand",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Site Brand Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageLink",
+        "label": "Site Brand Link"
+      },
+      {
+        "component": "richtext",
+        "name": "textContent_text",
+        "label": "Navbar Links",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "xe-navbar-v3",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "value": "",
+        "label": "Navbar Variant",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Show Search",
+            "value": "xe-navbar-v3-show-search"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Site Brand",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Site Brand Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageLink",
+        "label": "Site Brand Link"
+      },
+      {
+        "component": "aem-content",
+        "name": "links",
+        "label": "Site Links",
+        "description": "Select pages from your site. Each page name becomes the link text and its child pages become the subnavigation.",
+        "multi": true
+      }
+    ]
+  },
+  {
+    "id": "xe-navbar",
+    "fields": [
+      {
+        "component": "select",
+        "name": "classes",
+        "value": "",
+        "label": "Navbar Variant",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "Show Search",
+            "value": "xe-navbar-show-search"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Site Brand",
+        "multi": false
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageAlt",
+        "label": "Site Brand Alt Text"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageLink",
+        "label": "Site Brand Link"
+      },
+      {
+        "component": "richtext",
+        "name": "textContent_text",
+        "label": "Navbar Links",
         "valueType": "string"
       }
     ]

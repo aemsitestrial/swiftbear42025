@@ -52,9 +52,10 @@
         "columns",
         "fragment",
         "teaser",
-        "ex-banner",
-        "ex-navbar",
-        "ex-navbar-v2"
+        "xe-banner",
+        "xe-navbar",
+        "xe-navbar-v2",
+        "xe-navbar-v3"
       ]
     }
   ]

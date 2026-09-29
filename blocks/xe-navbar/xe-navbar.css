@@ -1,12 +1,12 @@
-.ex-navbar-wrapper,
-main > .section > .ex-navbar-wrapper {
+.xe-navbar-wrapper,
+main > .section > .xe-navbar-wrapper {
 	margin: 0;
 	padding: 12px 0;
 	background-color: #f5eee8;
 	max-width: unset;
 }
 
-.ex-navbar {
+.xe-navbar {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -15,43 +15,43 @@ main > .section > .ex-navbar-wrapper {
 	padding-inline: 24px;
 }
 
-.ex-navbar-brand a {
+.xe-navbar-brand a {
 	display: inline-block;
 }
 
-.ex-navbar-brand img {
+.xe-navbar-brand img {
 	width: 100%;
 	max-width: 180px;
 	position: relative;
 	top: 4px;
 }
 
-.ex-navbar-links ul {
+.xe-navbar-links ul {
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 }
 
 /* Top level list. */
-.ex-navbar-links > ul,
-.ex-navbar-links .ex-navbar-level-1 {
+.xe-navbar-links > ul,
+.xe-navbar-links .xe-navbar-level-1 {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
 }
 
-.ex-navbar-links .ex-navbar-level-1 > li {
+.xe-navbar-links .xe-navbar-level-1 > li {
 	border-right: 1px solid #d9d9d9;
 	padding-right: 20px;
 }
 
-.ex-navbar-links .ex-navbar-level-1 > li:last-child {
+.xe-navbar-links .xe-navbar-level-1 > li:last-child {
 	border-right: none;
 	padding-right: 0;
 }
 
 /* Shared anchor styling across all levels. */
-.ex-navbar-links li a {
+.xe-navbar-links li a {
 	display: block;
 	color: #000;
 	height: 40px;
@@ -61,12 +61,12 @@ main > .section > .ex-navbar-wrapper {
 	white-space: nowrap;
 }
 
-.ex-navbar-links li a:hover {
+.xe-navbar-links li a:hover {
 	color: #da1020;
 }
 
 /* Underline indicator only on top level links. */
-.ex-navbar-links .ex-navbar-level-1 > li > a::after {
+.xe-navbar-links .xe-navbar-level-1 > li > a::after {
 	content: "";
 	position: absolute;
 	background: rgb(0 0 0 / 0%);
@@ -77,18 +77,18 @@ main > .section > .ex-navbar-wrapper {
 	transition: background-color .1s ease-out;
 }
 
-.ex-navbar-links .ex-navbar-level-1 > li > a:hover::after {
+.xe-navbar-links .xe-navbar-level-1 > li > a:hover::after {
 	background-color: #da1020;
 }
 
 /* Parent items that reveal a sub menu. */
-.ex-navbar-links .ex-navbar-has-children {
+.xe-navbar-links .xe-navbar-has-children {
 	position: relative;
 }
 
 /* Sub menus (levels 2 and 3) are hidden until their parent is hovered/focused. */
-.ex-navbar-links .ex-navbar-level-2,
-.ex-navbar-links .ex-navbar-level-3 {
+.xe-navbar-links .xe-navbar-level-2,
+.xe-navbar-links .xe-navbar-level-3 {
 	display: block;
 	position: absolute;
 	top: 100%;
@@ -107,19 +107,19 @@ main > .section > .ex-navbar-wrapper {
 	z-index: 100;
 }
 
-.ex-navbar-links .ex-navbar-level-2 li a,
-.ex-navbar-links .ex-navbar-level-3 li a {
+.xe-navbar-links .xe-navbar-level-2 li a,
+.xe-navbar-links .xe-navbar-level-3 li a {
 	padding: 0 16px;
 }
 
-.ex-navbar-links .ex-navbar-level-2 li a:hover,
-.ex-navbar-links .ex-navbar-level-3 li a:hover {
+.xe-navbar-links .xe-navbar-level-2 li a:hover,
+.xe-navbar-links .xe-navbar-level-3 li a:hover {
 	background-color: #f5eee8;
 }
 
 /* Reveal the immediate sub menu on hover or keyboard focus. */
-.ex-navbar-links .ex-navbar-has-children:hover > ul,
-.ex-navbar-links .ex-navbar-has-children:focus-within > ul {
+.xe-navbar-links .xe-navbar-has-children:hover > ul,
+.xe-navbar-links .xe-navbar-has-children:focus-within > ul {
 	opacity: 1;
 	visibility: visible;
 	transform: translateY(0);
@@ -127,23 +127,23 @@ main > .section > .ex-navbar-wrapper {
 
 /* media query */
 @media (width >= 900px) {
-	.ex-navbar {
+	.xe-navbar {
 		padding-inline: 32px;
 	}
 
-	.ex-navbar-links .ex-navbar-level-1 {
+	.xe-navbar-links .xe-navbar-level-1 {
 		flex-direction: row;
 		align-items: center;
 	}
 
 	/* Level 2 opens directly below its parent. */
-	.ex-navbar-links .ex-navbar-level-2 {
+	.xe-navbar-links .xe-navbar-level-2 {
 		top: 100%;
 		left: 0;
 	}
 
 	/* Level 3 flies out to the right of its level 2 parent. */
-	.ex-navbar-links .ex-navbar-level-3 {
+	.xe-navbar-links .xe-navbar-level-3 {
 		top: -9px;
 		left: 100%;
 	}
@@ -157,8 +157,8 @@ main > .section > .ex-navbar-wrapper {
  * inside the editor (signalled by a `data-aue-resource` ancestor) we lay the sub menus out inline
  * and always visible so every navigation link is reachable and editable.
  */
-[data-aue-resource] .ex-navbar-links .ex-navbar-level-2,
-[data-aue-resource] .ex-navbar-links .ex-navbar-level-3 {
+[data-aue-resource] .xe-navbar-links .xe-navbar-level-2,
+[data-aue-resource] .xe-navbar-links .xe-navbar-level-3 {
 	position: static;
 	opacity: 1;
 	visibility: visible;
@@ -171,24 +171,24 @@ main > .section > .ex-navbar-wrapper {
 
 /* Let the links container grow into the space left of the brand instead of shrinking to the
    width of its widest item. */
-[data-aue-resource] .ex-navbar-links {
+[data-aue-resource] .xe-navbar-links {
 	flex: 1;
 }
 
 /* Top level items stretch to fill the container width. */
-[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 > li {
+[data-aue-resource] .xe-navbar-links .xe-navbar-level-1 > li {
 	align-self: stretch;
 }
 
 /* Keep the parent item as a normal block so the inline sub menu stacks below it. */
-[data-aue-resource] .ex-navbar-links .ex-navbar-has-children {
+[data-aue-resource] .xe-navbar-links .xe-navbar-has-children {
 	position: static;
 }
 
 /* Anchors are full-height flex rows on the live site; in the editor let them size to content so
    the stacked sub menu items don't leave large gaps. */
-[data-aue-resource] .ex-navbar-links .ex-navbar-level-2 li a,
-[data-aue-resource] .ex-navbar-links .ex-navbar-level-3 li a {
+[data-aue-resource] .xe-navbar-links .xe-navbar-level-2 li a,
+[data-aue-resource] .xe-navbar-links .xe-navbar-level-3 li a {
 	height: auto;
 	line-height: 1.5;
 	padding: 4px 8px;
@@ -197,18 +197,18 @@ main > .section > .ex-navbar-wrapper {
 @media (width >= 900px) {
 	/* Stack the whole tree vertically in the editor so nested levels read as an outline rather
 	   than overlapping fly-outs. */
-	[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 {
+	[data-aue-resource] .xe-navbar-links .xe-navbar-level-1 {
 		flex-direction: column;
 		align-items: flex-start;
 		gap: 8px;
 	}
 
-	[data-aue-resource] .ex-navbar-links .ex-navbar-level-1 > li {
+	[data-aue-resource] .xe-navbar-links .xe-navbar-level-1 > li {
 		border-right: none;
 		padding-right: 0;
 	}
 
-	[data-aue-resource] .ex-navbar-links .ex-navbar-level-3 {
+	[data-aue-resource] .xe-navbar-links .xe-navbar-level-3 {
 		top: auto;
 		left: auto;
 	}
