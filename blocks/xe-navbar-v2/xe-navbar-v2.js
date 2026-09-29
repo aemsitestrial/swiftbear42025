@@ -9,17 +9,17 @@ export default function decorate(block) {
 
   const isEditor = !!block.closest('[data-aue-resource]');
   if (isEditor) {
-    block.classList.add('ex-navbar-v2-editor');
+    block.classList.add('xe-navbar-v2-editor');
   }
 
   if (brand) {
-    brand.classList.add('ex-navbar-brand');
-    brand.dataset.blockName = 'ex-navbar-brand';
+    brand.classList.add('xe-navbar-brand');
+    brand.dataset.blockName = 'xe-navbar-brand';
   }
 
   if (brandLink) {
-    brandLink.classList.add('ex-navbar-brandLink');
-    brandLink.dataset.blockName = 'ex-navbar-brandLink';
+    brandLink.classList.add('xe-navbar-brandLink');
+    brandLink.dataset.blockName = 'xe-navbar-brandLink';
 
     const brandAnchor = brandLink.querySelector('a');
     const picture = brand?.querySelector('picture');
@@ -46,8 +46,8 @@ export default function decorate(block) {
   }
 
   if (links) {
-    links.classList.add('ex-navbar-links');
-    links.dataset.blockName = 'ex-navbar-links';
+    links.classList.add('xe-navbar-links');
+    links.dataset.blockName = 'xe-navbar-links';
 
     const topList = links.querySelector('ul');
     if (topList && !isEditor) {
@@ -97,12 +97,12 @@ export default function decorate(block) {
 
     const annotate = (list, level) => {
       if (!list || level > 3) return;
-      list.classList.add('ex-navbar-level', `ex-navbar-level-${level}`);
+      list.classList.add('xe-navbar-level', `xe-navbar-level-${level}`);
       [...list.children].forEach((li) => {
         if (li.tagName !== 'LI') return;
         const subList = li.querySelector(':scope > ul');
         if (subList) {
-          li.classList.add('ex-navbar-has-children');
+          li.classList.add('xe-navbar-has-children');
 
           let control = li.querySelector(':scope > a');
           if (control) {
@@ -120,9 +120,9 @@ export default function decorate(block) {
           }
 
           // Add the chevron indicator to this parent's own control (not links in the sub list).
-          if (control && !control.querySelector('.ex-navbar-chevron')) {
+          if (control && !control.querySelector('.xe-navbar-chevron')) {
             const chevron = document.createElement('span');
-            chevron.className = `ex-navbar-chevron ex-navbar-chevron-${level === 1 ? 'down' : 'right'}`;
+            chevron.className = `xe-navbar-chevron xe-navbar-chevron-${level === 1 ? 'down' : 'right'}`;
             chevron.setAttribute('aria-hidden', 'true');
             control.appendChild(chevron);
           }
@@ -135,11 +135,11 @@ export default function decorate(block) {
 
     const closeMenu = (li) => {
       if (!li) return;
-      li.classList.remove('ex-navbar-open');
+      li.classList.remove('xe-navbar-open');
       const control = getControl(li);
       if (control) control.setAttribute('aria-expanded', 'false');
-      li.querySelectorAll('.ex-navbar-open').forEach((child) => {
-        child.classList.remove('ex-navbar-open');
+      li.querySelectorAll('.xe-navbar-open').forEach((child) => {
+        child.classList.remove('xe-navbar-open');
         const childControl = getControl(child);
         if (childControl) childControl.setAttribute('aria-expanded', 'false');
       });
@@ -150,7 +150,7 @@ export default function decorate(block) {
       [...li.parentElement.children].forEach((sibling) => {
         if (sibling !== li) closeMenu(sibling);
       });
-      li.classList.add('ex-navbar-open');
+      li.classList.add('xe-navbar-open');
       if (control) control.setAttribute('aria-expanded', 'true');
     };
 
@@ -164,7 +164,7 @@ export default function decorate(block) {
 
       const toggle = (event) => {
         event.preventDefault();
-        if (li.classList.contains('ex-navbar-open')) closeMenu(li);
+        if (li.classList.contains('xe-navbar-open')) closeMenu(li);
         else openMenu(li);
       };
 
@@ -176,14 +176,14 @@ export default function decorate(block) {
       }
     };
 
-    links.querySelectorAll('.ex-navbar-has-children').forEach(setupToggle);
+    links.querySelectorAll('.xe-navbar-has-children').forEach(setupToggle);
 
     // Arrow-key navigation (WAI-ARIA menu keyboard pattern). All links stay in the natural Tab
     const desktopMq = window.matchMedia('(min-width: 900px)');
     const listLevel = (list) => {
-      if (list.classList.contains('ex-navbar-level-1')) return 1;
-      if (list.classList.contains('ex-navbar-level-2')) return 2;
-      if (list.classList.contains('ex-navbar-level-3')) return 3;
+      if (list.classList.contains('xe-navbar-level-1')) return 1;
+      if (list.classList.contains('xe-navbar-level-2')) return 2;
+      if (list.classList.contains('xe-navbar-level-3')) return 3;
       return 0;
     };
     const itemsOf = (list) => [...list.children].filter((c) => c.tagName === 'LI');
@@ -274,7 +274,7 @@ export default function decorate(block) {
 
       const items = itemsOf(list);
       const index = items.indexOf(li);
-      const hasChildren = li.classList.contains('ex-navbar-has-children');
+      const hasChildren = li.classList.contains('xe-navbar-has-children');
       // The top level is horizontal only on desktop; in the mobile drawer it stacks vertically.
       const topHorizontal = level === 1 && desktop;
 
@@ -303,7 +303,7 @@ export default function decorate(block) {
           focusAt(items, items.length - 1);
           break;
         case enterKey:
-          if (hasChildren && li.classList.contains('ex-navbar-open')) {
+          if (hasChildren && li.classList.contains('xe-navbar-open')) {
             event.preventDefault();
             focusChild(li, 'first');
           }
@@ -316,7 +316,7 @@ export default function decorate(block) {
               closeMenu(parentLi);
               focusAnchor(parentLi);
             }
-          } else if (li.classList.contains('ex-navbar-open')) {
+          } else if (li.classList.contains('xe-navbar-open')) {
             event.preventDefault();
             closeMenu(li);
           }
@@ -328,26 +328,26 @@ export default function decorate(block) {
 
     document.addEventListener('click', (event) => {
       if (!links.contains(event.target)) {
-        links.querySelectorAll('.ex-navbar-open').forEach(closeMenu);
+        links.querySelectorAll('.xe-navbar-open').forEach(closeMenu);
       }
     });
     links.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
-        links.querySelectorAll('.ex-navbar-open').forEach(closeMenu);
+        links.querySelectorAll('.xe-navbar-open').forEach(closeMenu);
       }
     });
 
     // Mobile / tablet navigation (screens under 900px). A hamburger button toggles the links list
     if (!isEditor) {
-      links.id = links.id || 'ex-navbar-v2-drawer';
+      links.id = links.id || 'xe-navbar-v2-drawer';
 
       const hamburger = document.createElement('button');
       hamburger.type = 'button';
-      hamburger.className = 'ex-navbar-hamburger';
+      hamburger.className = 'xe-navbar-hamburger';
       hamburger.setAttribute('aria-label', 'Open navigation menu');
       hamburger.setAttribute('aria-expanded', 'false');
       hamburger.setAttribute('aria-controls', links.id);
-      hamburger.innerHTML = '<span class="ex-navbar-hamburger-box" aria-hidden="true"><span class="ex-navbar-hamburger-inner"></span></span>';
+      hamburger.innerHTML = '<span class="xe-navbar-hamburger-box" aria-hidden="true"><span class="xe-navbar-hamburger-inner"></span></span>';
 
       if (brand) brand.after(hamburger);
       else block.prepend(hamburger);
@@ -359,7 +359,7 @@ export default function decorate(block) {
         .filter((el) => el.offsetParent !== null || el === document.activeElement);
 
       let lastFocused = null;
-      const isOpen = () => block.classList.contains('ex-navbar-v2-drawer-open');
+      const isOpen = () => block.classList.contains('xe-navbar-v2-drawer-open');
       let closeDrawer;
 
       const onKeydown = (event) => {
@@ -385,7 +385,7 @@ export default function decorate(block) {
       const openDrawer = () => {
         if (isOpen()) return;
         lastFocused = document.activeElement;
-        block.classList.add('ex-navbar-v2-drawer-open');
+        block.classList.add('xe-navbar-v2-drawer-open');
         hamburger.setAttribute('aria-expanded', 'true');
         hamburger.setAttribute('aria-label', 'Close navigation menu');
         links.setAttribute('role', 'dialog');
@@ -398,7 +398,7 @@ export default function decorate(block) {
 
       closeDrawer = ({ returnFocus = true } = {}) => {
         if (!isOpen()) return;
-        block.classList.remove('ex-navbar-v2-drawer-open');
+        block.classList.remove('xe-navbar-v2-drawer-open');
         hamburger.setAttribute('aria-expanded', 'false');
         hamburger.setAttribute('aria-label', 'Open navigation menu');
         links.removeAttribute('role');
@@ -406,7 +406,7 @@ export default function decorate(block) {
         links.removeAttribute('aria-label');
         document.body.style.overflow = '';
         document.removeEventListener('keydown', onKeydown, true);
-        links.querySelectorAll('.ex-navbar-open').forEach(closeMenu);
+        links.querySelectorAll('.xe-navbar-open').forEach(closeMenu);
         if (returnFocus) hamburger.focus();
         else if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
       };
@@ -425,8 +425,8 @@ export default function decorate(block) {
       // Keep each subnav as its own full-width row in the editor. Tag the rows and clean up the
       // button treatment the core decorateButtons pass applies to their links.
       subnavRows.forEach((row) => {
-        row.classList.add('ex-navbar-subnav-row');
-        row.dataset.blockName = 'ex-navbar-subnav';
+        row.classList.add('xe-navbar-subnav-row');
+        row.dataset.blockName = 'xe-navbar-subnav';
         row.querySelectorAll('a.button').forEach((a) => a.classList.remove('button'));
         row.querySelectorAll('p.button-container').forEach((p) => {
           p.replaceWith(...p.childNodes);

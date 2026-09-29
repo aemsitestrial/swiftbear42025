@@ -5,13 +5,13 @@ export default function decorate(block) {
   const links = rows[2];
 
   if (brand) {
-    brand.classList.add('ex-navbar-brand');
-    brand.dataset.blockName = 'ex-navbar-brand';
+    brand.classList.add('xe-navbar-brand');
+    brand.dataset.blockName = 'xe-navbar-brand';
   }
 
   if (brandLink) {
-    brandLink.classList.add('ex-navbar-brandLink');
-    brandLink.dataset.blockName = 'ex-navbar-brandLink';
+    brandLink.classList.add('xe-navbar-brandLink');
+    brandLink.dataset.blockName = 'xe-navbar-brandLink';
 
     const brandAnchor = brandLink.querySelector('a');
     const picture = brand?.querySelector('picture');
@@ -39,8 +39,8 @@ export default function decorate(block) {
   }
 
   if (links) {
-    links.classList.add('ex-navbar-links');
-    links.dataset.blockName = 'ex-navbar-links';
+    links.classList.add('xe-navbar-links');
+    links.dataset.blockName = 'xe-navbar-links';
 
     // Remove the button treatment applied by the core decorateButtons pass. Parent list items
     // that also contain a sub-menu get their anchor wrapped in a <p class="button-container">
@@ -55,12 +55,12 @@ export default function decorate(block) {
     // so the CSS can reveal the nested navigation on hover.
     const annotate = (list, level) => {
       if (!list || level > 3) return;
-      list.classList.add('ex-navbar-level', `ex-navbar-level-${level}`);
+      list.classList.add('xe-navbar-level', `xe-navbar-level-${level}`);
       [...list.children].forEach((li) => {
         if (li.tagName !== 'LI') return;
         const subList = li.querySelector(':scope > ul');
         if (subList) {
-          li.classList.add('ex-navbar-has-children');
+          li.classList.add('xe-navbar-has-children');
           annotate(subList, level + 1);
         }
       });

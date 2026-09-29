@@ -1,15 +1,15 @@
 {
   "definitions": [
     {
-      "title": "EX Navbar Subnavigation",
-      "id": "ex-navbar-subnav",
+      "title": "XE Navbar Subnavigation",
+      "id": "xe-navbar-subnav",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "EX Navbar Subnavigation",
-              "model": "ex-navbar-subnav"
+              "name": "XE Navbar Subnavigation",
+              "model": "xe-navbar-subnav"
             }
           }
         }
@@ -18,7 +18,7 @@
   ],
   "models": [
     {
-      "id": "ex-navbar-subnav",
+      "id": "xe-navbar-subnav",
       "fields": [
         {
           "component": "text",

@@ -1,16 +1,16 @@
-.ex-banner {
-  --ex-banner-text-color: #2d2a26;
-  --ex-banner-action-color: #a6192e;
+.xe-banner {
+  --xe-banner-text-color: #2d2a26;
+  --xe-banner-action-color: #a6192e;
 
-  color: var(--ex-banner-text-color);
+  color: var(--xe-banner-text-color);
 }
 
-.ex-banner xe-banner {
+.xe-banner xe-banner {
   display: block;
   padding: 24px 16px 48px;
 }
 
-.ex-banner xe-banner-column {
+.xe-banner xe-banner-column {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,7 +20,7 @@
   text-align: center;
 }
 
-.ex-banner xe-banner-column > [slot='heading'] {
+.xe-banner xe-banner-column > [slot='heading'] {
   display: block;
   font-family: var(--heading-font-family);
   font-size: clamp(48px, 8vw, 80px);
@@ -30,23 +30,23 @@
   text-transform: uppercase;
 }
 
-.ex-banner xe-banner-column > [slot='message'] {
+.xe-banner xe-banner-column > [slot='message'] {
   font-size: 18px;
   line-height: 1.35;
 }
 
-.ex-banner xe-banner-column > [slot='message'] a:any-link {
-  color: var(--ex-banner-action-color);
+.xe-banner xe-banner-column > [slot='message'] a:any-link {
+  color: var(--xe-banner-action-color);
 }
 
-.ex-banner xe-button {
+.xe-banner xe-button {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 12px 16px;
-  border: 1px solid var(--ex-banner-action-color);
+  border: 1px solid var(--xe-banner-action-color);
   border-radius: 4px;
-  color: var(--ex-banner-action-color);
+  color: var(--xe-banner-action-color);
   font-size: 18px;
   font-weight: 500;
   line-height: 1.4;
@@ -54,33 +54,33 @@
   transition: background-color 0.2s, color 0.2s;
 }
 
-.ex-banner xe-button:hover,
-.ex-banner xe-button:focus-visible {
-  background-color: var(--ex-banner-action-color);
+.xe-banner xe-button:hover,
+.xe-banner xe-button:focus-visible {
+  background-color: var(--xe-banner-action-color);
   color: #fff;
 }
 
-.ex-banner xe-button:focus-visible {
+.xe-banner xe-button:focus-visible {
   outline: 3px dotted #57595d;
   outline-offset: 2px;
 }
 
 /* Icon fallback until the xe-icon component is defined */
-.ex-banner xe-icon:not(:defined) {
+.xe-banner xe-icon:not(:defined) {
   display: inline-block;
   flex-shrink: 0;
   width: 32px;
   height: 32px;
 }
 
-.ex-banner xe-icon:not(:defined) svg {
+.xe-banner xe-icon:not(:defined) svg {
   display: block;
   width: 100%;
   height: 100%;
   fill: currentcolor;
 }
 
-.ex-banner xe-icon[size='sm']:not(:defined) {
+.xe-banner xe-icon[size='sm']:not(:defined) {
   width: 20px;
   height: 20px;
 }
