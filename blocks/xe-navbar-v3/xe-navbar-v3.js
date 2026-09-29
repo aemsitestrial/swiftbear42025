@@ -79,8 +79,8 @@ export default async function decorate(block) {
   // Top level items paired with the site path of their page, used to look up child pages.
   const sitePages = [];
 
-  // The Site Links multi-field renders as a list of links. Resolve each selected page into its
-  // page name and site URL.
+  // The Site Link field renders as a single link (or a list of links if it becomes a multi-field
+  // again). Resolve each selected page into its page name and site URL.
   if (links) {
     const cell = links.firstElementChild || links;
     let siteList = cell.querySelector('ul');
