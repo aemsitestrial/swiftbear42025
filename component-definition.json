@@ -191,16 +191,16 @@
           }
         },
         {
-          "title": "XE Navbar V3",
-          "id": "xe-navbar-v3",
+          "title": "XE Navbar Multi",
+          "id": "xe-navbar-multi",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "XE Navbar V3",
-                  "model": "xe-navbar-v3",
-                  "filter": "xe-navbar-v3"
+                  "name": "XE Navbar Multi",
+                  "model": "xe-navbar-multi",
+                  "filter": "xe-navbar-multi"
                 }
               }
             }

@@ -312,7 +312,7 @@
     ]
   },
   {
-    "id": "xe-navbar-v3",
+    "id": "xe-navbar-multi",
     "fields": [
       {
         "component": "select",
@@ -327,7 +327,7 @@
           },
           {
             "name": "Show Search",
-            "value": "xe-navbar-v3-show-search"
+            "value": "xe-navbar-multi-show-search"
           }
         ]
       },

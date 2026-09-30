@@ -70,7 +70,7 @@ export default async function decorate(block) {
 
   const isEditor = !!block.closest('[data-aue-resource]');
   if (isEditor) {
-    block.classList.add('xe-navbar-v3-editor');
+    block.classList.add('xe-navbar-multi-editor');
   }
 
   // On AEM author the page lives under the site root, so keep the author link to stay navigable.
@@ -413,7 +413,7 @@ export default async function decorate(block) {
 
     // Mobile / tablet navigation (screens under 900px). A hamburger button toggles the links list
     if (!isEditor) {
-      links.id = links.id || 'xe-navbar-v3-drawer';
+      links.id = links.id || 'xe-navbar-multi-drawer';
 
       const hamburger = document.createElement('button');
       hamburger.type = 'button';
@@ -433,7 +433,7 @@ export default async function decorate(block) {
         .filter((el) => el.offsetParent !== null || el === document.activeElement);
 
       let lastFocused = null;
-      const isOpen = () => block.classList.contains('xe-navbar-v3-drawer-open');
+      const isOpen = () => block.classList.contains('xe-navbar-multi-drawer-open');
       let closeDrawer;
 
       const onKeydown = (event) => {
@@ -459,7 +459,7 @@ export default async function decorate(block) {
       const openDrawer = () => {
         if (isOpen()) return;
         lastFocused = document.activeElement;
-        block.classList.add('xe-navbar-v3-drawer-open');
+        block.classList.add('xe-navbar-multi-drawer-open');
         hamburger.setAttribute('aria-expanded', 'true');
         hamburger.setAttribute('aria-label', 'Close navigation menu');
         links.setAttribute('role', 'dialog');
@@ -472,7 +472,7 @@ export default async function decorate(block) {
 
       closeDrawer = ({ returnFocus = true } = {}) => {
         if (!isOpen()) return;
-        block.classList.remove('xe-navbar-v3-drawer-open');
+        block.classList.remove('xe-navbar-multi-drawer-open');
         hamburger.setAttribute('aria-expanded', 'false');
         hamburger.setAttribute('aria-label', 'Open navigation menu');
         links.removeAttribute('role');

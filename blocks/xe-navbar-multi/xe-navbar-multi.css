@@ -1,12 +1,12 @@
-.xe-navbar-v3-wrapper,
-main > .section > .xe-navbar-v3-wrapper {
+.xe-navbar-multi-wrapper,
+main > .section > .xe-navbar-multi-wrapper {
 	margin: 0;
 	padding: 12px 0;
 	background-color: #f5eee8;
 	max-width: unset;
 }
 
-.xe-navbar-v3 {
+.xe-navbar-multi {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -15,7 +15,7 @@ main > .section > .xe-navbar-v3-wrapper {
 	padding-inline: 24px;
 }
 
-.xe-navbar-v3 a:focus,
+.xe-navbar-multi a:focus,
 .xe-navbar-links li button:focus {
 	outline: 3px dotted #57595d;
 }
@@ -106,16 +106,16 @@ main > .section > .xe-navbar-v3-wrapper {
 	top: 8px;
 }
 
-.xe-navbar-v3-drawer-open .xe-navbar-hamburger-inner {
+.xe-navbar-multi-drawer-open .xe-navbar-hamburger-inner {
 	background-color: transparent;
 }
 
-.xe-navbar-v3-drawer-open .xe-navbar-hamburger-inner::before {
+.xe-navbar-multi-drawer-open .xe-navbar-hamburger-inner::before {
 	top: 0;
 	transform: rotate(45deg);
 }
 
-.xe-navbar-v3-drawer-open .xe-navbar-hamburger-inner::after {
+.xe-navbar-multi-drawer-open .xe-navbar-hamburger-inner::after {
 	top: 0;
 	transform: rotate(-45deg);
 }
@@ -259,7 +259,7 @@ main > .section > .xe-navbar-v3-wrapper {
 		display: inline-flex;
 	}
 
-	.xe-navbar-v3 {
+	.xe-navbar-multi {
 		position: relative;
 	}
 
@@ -281,14 +281,14 @@ main > .section > .xe-navbar-v3-wrapper {
 		transition: opacity .2s ease-out, transform .2s ease-out, visibility 0s linear .2s;
 	}
 
-	.xe-navbar-v3-drawer-open .xe-navbar-links {
+	.xe-navbar-multi-drawer-open .xe-navbar-links {
 		opacity: 1;
 		visibility: visible;
 		transform: translateY(0);
 		transition: opacity .2s ease-out, transform .2s ease-out, visibility 0s linear 0s;
 	}
 
-	.xe-navbar-v3-drawer-open .xe-navbar-hamburger {
+	.xe-navbar-multi-drawer-open .xe-navbar-hamburger {
 		position: relative;
 		z-index: 201;
 	}
@@ -375,7 +375,7 @@ main > .section > .xe-navbar-v3-wrapper {
 }
 
 @media (width >= 900px) {
-	.xe-navbar-v3 {
+	.xe-navbar-multi {
 		padding-inline: 32px;
 	}
 
@@ -395,12 +395,12 @@ main > .section > .xe-navbar-v3-wrapper {
 	}
 }
 
-/* Editor styles for the xe-navbar-v3 block. Subnavigation is not rendered in the editor. */
-.xe-navbar-v3-editor .xe-navbar-links {
+/* Editor styles for the xe-navbar-multi block. Subnavigation is not rendered in the editor. */
+.xe-navbar-multi-editor .xe-navbar-links {
 	flex: 1;
 }
 
-.xe-navbar-v3-editor .xe-navbar-links .xe-navbar-level-1 {
+.xe-navbar-multi-editor .xe-navbar-links .xe-navbar-level-1 {
 	flex-flow: row wrap;
 	align-items: center;
 	justify-content: flex-end;
