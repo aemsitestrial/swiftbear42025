@@ -8,7 +8,7 @@ import { loadFragment } from '../fragment/fragment.js';
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/navbar-v3';
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/navbar-multi';
   const fragment = await loadFragment(navPath);
 
   // if the current page IS the nav fragment being edited/viewed, hide the header block so the
