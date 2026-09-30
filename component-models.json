@@ -418,9 +418,9 @@
       {
         "component": "aem-content",
         "name": "links",
-        "label": "Site Links",
-        "description": "Select pages from your site. Each page name becomes the link text and its child pages become the subnavigation.",
-        "multi": true
+        "label": "Site Link",
+        "description": "Select a page from your site. The page name becomes the link text and its child pages become the subnavigation.",
+        "multi": false
       }
     ]
   },
