@@ -61,7 +61,7 @@
           "component": "aem-content",
           "name": "links",
           "label": "Site Link",
-          "description": "Select a page from your site. The page name becomes the link text and its child pages become the subnavigation.",
+          "description": "Select a page from your site. The page title becomes the navigation label.",
           "multi": false
         }
       ]
