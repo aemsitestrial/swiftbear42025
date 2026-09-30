@@ -1,10 +1,13 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-// AEM Sites root for this site (see paths.json). Page paths under it are published at the root.
-const SITE_ROOT = '/content/2026/37/swiftbear42025';
+const QUERY_INDEX = '/query-index.json';
+const INDEX_PAGE_SIZE = 500;
+const MAX_LEVEL = 3;
 
-// Resolve a selected AEM page into its page name and public URL, e.g.
-// /content/2026/37/swiftbear42025/xe-banner.html -> { name: 'xe-banner', url: '/xe-banner' }.
+const pageName = (path) => path.split('/').filter(Boolean).pop() || '';
+
+// Resolve a selected page link into its page name and path. Published links already carry the
+// site path (paths.json is applied on publish), while author links keep their /content/... path,
 const resolveSitePage = (href) => {
   let url;
   try {
@@ -13,54 +16,62 @@ const resolveSitePage = (href) => {
     return null;
   }
   const path = url.pathname.replace(/\.html$/, '').replace(/\/+$/, '');
-  const name = path.split('/').filter(Boolean).pop() || '';
-  if (url.origin !== window.location.origin) return { name, url: url.href };
-  const sitePath = path === SITE_ROOT || path.startsWith(`${SITE_ROOT}/`)
-    ? path.slice(SITE_ROOT.length)
-    : path;
-  return { name, url: sitePath || '/' };
+  return { name: pageName(path), path, sameOrigin: url.origin === window.location.origin };
 };
 
-const QUERY_INDEX = '/query-index.json';
-const INDEX_PAGE_SIZE = 500;
-const MAX_LEVEL = 3;
+// Read a page's title from the page itself (its og:title, falling back to <title>).
+const fetchPageTitle = async (href) => {
+  try {
+    const resp = await fetch(href);
+    if (!resp.ok) return '';
+    const doc = new DOMParser().parseFromString(await resp.text(), 'text/html');
+    const title = doc.querySelector('meta[property="og:title"]')?.getAttribute('content') || doc.title;
+    return (title || '').trim();
+  } catch (e) {
+    return '';
+  }
+};
 
-const pageName = (path) => path.split('/').filter(Boolean).pop() || '';
-
-// Load every published page path from the query index, following its pagination.
-const fetchPagePaths = async (offset = 0) => {
+// Load every published page (path and title) from the query index, following its pagination.
+const fetchIndexPages = async (offset = 0) => {
   const resp = await fetch(`${QUERY_INDEX}?offset=${offset}&limit=${INDEX_PAGE_SIZE}`);
   if (!resp.ok) return [];
   const { data = [], total = 0 } = await resp.json();
-  const paths = data
-    .map(({ path }) => (path || '').replace(/\/+$/, ''))
-    .filter(Boolean);
+  const pages = data
+    .map(({ path, title }) => ({ path: (path || '').replace(/\/+$/, ''), title: (title || '').trim() }))
+    .filter(({ path }) => path);
   const next = offset + data.length;
-  return data.length && next < total ? paths.concat(await fetchPagePaths(next)) : paths;
+  return data.length && next < total ? pages.concat(await fetchIndexPages(next)) : pages;
 };
 
 // Build the nested list of pages authored directly under `parentPath`, down to MAX_LEVEL.
-const buildChildList = (parentPath, pagePaths, level) => {
+const buildChildList = (parentPath, pages, level) => {
   if (level > MAX_LEVEL) return null;
   const prefix = `${parentPath}/`;
-  const children = pagePaths
-    .filter((path) => path.startsWith(prefix) && !path.slice(prefix.length).includes('/'))
-    .sort((a, b) => pageName(a).localeCompare(pageName(b)));
+  const children = pages
+    .filter(({ path }) => path.startsWith(prefix) && !path.slice(prefix.length).includes('/'))
+    .sort((a, b) => pageName(a.path).localeCompare(pageName(b.path)));
   if (!children.length) return null;
 
   const list = document.createElement('ul');
-  children.forEach((path) => {
+  children.forEach(({ path, title }) => {
     const li = document.createElement('li');
     const anchor = document.createElement('a');
     anchor.href = path;
-    anchor.textContent = pageName(path);
+    anchor.textContent = title || pageName(path);
     li.append(anchor);
-    const subList = buildChildList(path, pagePaths, level + 1);
+    const subList = buildChildList(path, pages, level + 1);
     if (subList) li.append(subList);
     list.append(li);
   });
   return list;
 };
+
+// Fill in titles for pages the query index has no title for yet by reading them from the page.
+const fillMissingTitles = (pages) => Promise.all(pages.map(async (page) => {
+  if (page.title) return page;
+  return { ...page, title: await fetchPageTitle(page.path) };
+}));
 
 export default async function decorate(block) {
   const rows = [...block.children];
@@ -73,14 +84,15 @@ export default async function decorate(block) {
     block.classList.add('xe-navbar-v3-editor');
   }
 
-  // On AEM author the page lives under the site root, so keep the author link to stay navigable.
-  const onAuthor = window.location.pathname.startsWith(`${SITE_ROOT}/`);
+  // AEM author serves pages from their repository path under /content.
+  const onAuthor = window.location.pathname.startsWith('/content/');
 
   // Top level items paired with the site path of their page, used to look up child pages.
   const sitePages = [];
 
   // The Site Link field renders as a single link (or a list of links if it becomes a multi-field
-  // again). Resolve each selected page into its page name and site URL.
+  // again). Use each selected page's title as the link text.
+  const titleRequests = [];
   if (links) {
     const cell = links.firstElementChild || links;
     let siteList = cell.querySelector('ul');
@@ -102,11 +114,17 @@ export default async function decorate(block) {
         return;
       }
       anchor.textContent = page.name || anchor.textContent;
-      if (!onAuthor) anchor.setAttribute('href', page.url);
       li.replaceChildren(anchor);
-      if (page.url.startsWith('/') && page.url !== '/') sitePages.push({ li, path: page.url });
+      if (!page.sameOrigin) return;
+      if (page.path) sitePages.push({ li, path: page.path });
+
+      // Same-origin pages can be read directly for their title; the page name stays as fallback.
+      titleRequests.push(fetchPageTitle(anchor.getAttribute('href')).then((title) => {
+        if (title) anchor.textContent = title;
+      }));
     });
   }
+  await Promise.all(titleRequests);
 
   if (brand) {
     brand.classList.add('xe-navbar-brand');
@@ -150,14 +168,19 @@ export default async function decorate(block) {
     // Subnavigation comes from the child pages authored under each site link. It is not shown in
     // the editor, and the query index is only available on the published site.
     if (topList && !isEditor && !onAuthor && sitePages.length) {
-      let pagePaths = [];
+      let pages = [];
       try {
-        pagePaths = await fetchPagePaths();
+        // Only pages that can appear in the subnavigation (up to two levels below a site link).
+        pages = (await fetchIndexPages()).filter(({ path }) => sitePages.some((sitePage) => {
+          const prefix = `${sitePage.path}/`;
+          return path.startsWith(prefix) && path.slice(prefix.length).split('/').length <= MAX_LEVEL - 1;
+        }));
+        pages = await fillMissingTitles(pages);
       } catch (e) {
-        pagePaths = [];
+        pages = [];
       }
       sitePages.forEach(({ li, path }) => {
-        const subList = buildChildList(path, pagePaths, 2);
+        const subList = buildChildList(path, pages, 2);
         if (subList) li.append(subList);
       });
     }
