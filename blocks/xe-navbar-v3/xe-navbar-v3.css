@@ -9,15 +9,10 @@ main > .section > .xe-navbar-v3-wrapper {
 .xe-navbar-v3 {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	gap: 60px;
 	max-width: 1200px;
 	margin: 0 auto;
 	padding-inline: 24px;
-}
-
-.xe-navbar-v3 a:focus,
-.xe-navbar-links li button:focus {
-	outline: 3px dotted #57595d;
 }
 
 .xe-navbar-links li button {
@@ -32,11 +27,6 @@ main > .section > .xe-navbar-v3-wrapper {
 	border-radius: 0;
 	box-sizing: content-box;
 	appearance: none;
-}
-
-.xe-navbar-links li button:hover,
-.xe-navbar-links li button:focus {
-	background: transparent;
 }
 
 .xe-navbar-brand a {
@@ -154,6 +144,16 @@ main > .section > .xe-navbar-v3-wrapper {
 	white-space: nowrap;
 }
 
+.xe-navbar-v3 a:focus,
+.xe-navbar-links li button:focus {
+	outline: 3px dotted #57595d;
+}
+
+.xe-navbar-links li button:hover,
+.xe-navbar-links li button:focus {
+	background: transparent;
+}
+
 .xe-navbar-links li a:hover,
 .xe-navbar-links li a:focus,
 .xe-navbar-links li button:hover,
@@ -213,12 +213,13 @@ main > .section > .xe-navbar-v3-wrapper {
 }
 
 .xe-navbar-links .xe-navbar-level-2,
-.xe-navbar-links .xe-navbar-level-3 {
+.xe-navbar-links .xe-navbar-level-3,
+.xe-navbar-links .xe-navbar-level-4 {
 	display: block;
 	position: absolute;
 	top: 100%;
 	left: 0;
-	min-width: 200px;
+	min-width: 240px;
 	margin: 0;
 	padding: 8px 0;
 	background-color: #fff;
@@ -234,8 +235,10 @@ main > .section > .xe-navbar-v3-wrapper {
 
 .xe-navbar-links .xe-navbar-level-2 li a,
 .xe-navbar-links .xe-navbar-level-3 li a,
+.xe-navbar-links .xe-navbar-level-4 li a,
 .xe-navbar-links .xe-navbar-level-2 li button,
-.xe-navbar-links .xe-navbar-level-3 li button {
+.xe-navbar-links .xe-navbar-level-3 li button,
+.xe-navbar-links .xe-navbar-level-4 li button {
 	width: 100%;
 	box-sizing: border-box;
 	padding: 0 16px;
@@ -243,8 +246,10 @@ main > .section > .xe-navbar-v3-wrapper {
 
 .xe-navbar-links .xe-navbar-level-2 li a:hover,
 .xe-navbar-links .xe-navbar-level-3 li a:hover,
+.xe-navbar-links .xe-navbar-level-4 li a:hover,
 .xe-navbar-links .xe-navbar-level-2 li button:hover,
-.xe-navbar-links .xe-navbar-level-3 li button:hover {
+.xe-navbar-links .xe-navbar-level-3 li button:hover,
+.xe-navbar-links .xe-navbar-level-4 li button:hover {
 	background-color: #f5eee8;
 }
 
@@ -316,6 +321,15 @@ main > .section > .xe-navbar-v3-wrapper {
 		align-items: center;
 	}
 
+	.xe-navbar-links .xe-navbar-level-2 li a,
+	.xe-navbar-links .xe-navbar-level-3 li a,
+	.xe-navbar-links .xe-navbar-level-4 li a,
+	.xe-navbar-links .xe-navbar-level-2 li button,
+	.xe-navbar-links .xe-navbar-level-3 li button,
+	.xe-navbar-links .xe-navbar-level-4 li button {
+		padding-right: 0;
+	}
+
 	.xe-navbar-links .xe-navbar-has-children.xe-navbar-open > a,
 	.xe-navbar-links .xe-navbar-has-children.xe-navbar-open > button {
 		color: #da1020;
@@ -327,7 +341,8 @@ main > .section > .xe-navbar-v3-wrapper {
 	}
 
 	.xe-navbar-links .xe-navbar-level-2,
-	.xe-navbar-links .xe-navbar-level-3 {
+	.xe-navbar-links .xe-navbar-level-3,
+	.xe-navbar-links .xe-navbar-level-4 {
 		position: static;
 		display: none;
 		min-width: 0;
@@ -343,17 +358,12 @@ main > .section > .xe-navbar-v3-wrapper {
 		transition: none;
 	}
 
-	.xe-navbar-links .xe-navbar-level-2 li a,
-	.xe-navbar-links .xe-navbar-level-3 li a,
-	.xe-navbar-links .xe-navbar-level-2 li button,
-	.xe-navbar-links .xe-navbar-level-3 li button {
-		padding-right: 0;
-	}
-
 	.xe-navbar-links .xe-navbar-level-2 li a:hover,
 	.xe-navbar-links .xe-navbar-level-3 li a:hover,
+	.xe-navbar-links .xe-navbar-level-4 li a:hover,
 	.xe-navbar-links .xe-navbar-level-2 li button:hover,
-	.xe-navbar-links .xe-navbar-level-3 li button:hover {
+	.xe-navbar-links .xe-navbar-level-3 li button:hover,
+	.xe-navbar-links .xe-navbar-level-4 li button:hover {
 		background-color: transparent;
 	}
 
@@ -389,9 +399,22 @@ main > .section > .xe-navbar-v3-wrapper {
 		left: 0;
 	}
 
-	.xe-navbar-links .xe-navbar-level-3 {
+	.xe-navbar-links .xe-navbar-level-3,
+	.xe-navbar-links .xe-navbar-level-4 {
 		top: -9px;
 		left: 100%;
+	}
+
+	/* Sub menus that would run past the right edge of the window open towards the left instead. */
+	.xe-navbar-links .xe-navbar-level-2.xe-navbar-flyout-left {
+		left: auto;
+		right: 0;
+	}
+
+	.xe-navbar-links .xe-navbar-level-3.xe-navbar-flyout-left,
+	.xe-navbar-links .xe-navbar-level-4.xe-navbar-flyout-left {
+		left: auto;
+		right: 100%;
 	}
 }
 

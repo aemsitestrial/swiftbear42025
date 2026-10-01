@@ -2,7 +2,16 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 const QUERY_INDEX = '/query-index.json';
 const INDEX_PAGE_SIZE = 500;
-const MAX_LEVEL = 3;
+// Top level site links plus up to three levels of subnavigation. Authors pick how many levels to
+// show in the Subnavigation Levels field; content authored before that field defaults to all.
+const MAX_SUBNAV_LEVELS = 3;
+const MAX_LEVEL = MAX_SUBNAV_LEVELS + 1;
+
+const readSubnavLevels = (row) => {
+  const levels = parseInt(row?.textContent.trim(), 10);
+  if (Number.isNaN(levels)) return MAX_SUBNAV_LEVELS;
+  return Math.min(Math.max(levels, 1), MAX_SUBNAV_LEVELS);
+};
 
 const pageName = (path) => path.split('/').filter(Boolean).pop() || '';
 
@@ -44,9 +53,9 @@ const fetchIndexPages = async (offset = 0) => {
   return data.length && next < total ? pages.concat(await fetchIndexPages(next)) : pages;
 };
 
-// Build the nested list of pages authored directly under `parentPath`, down to MAX_LEVEL.
-const buildChildList = (parentPath, pages, level) => {
-  if (level > MAX_LEVEL) return null;
+// Build the nested list of pages authored directly under `parentPath`, down to `maxLevel`.
+const buildChildList = (parentPath, pages, level, maxLevel) => {
+  if (level > maxLevel) return null;
   const prefix = `${parentPath}/`;
   const children = pages
     .filter(({ path }) => path.startsWith(prefix) && !path.slice(prefix.length).includes('/'))
@@ -60,7 +69,7 @@ const buildChildList = (parentPath, pages, level) => {
     anchor.href = path;
     anchor.textContent = title || pageName(path);
     li.append(anchor);
-    const subList = buildChildList(path, pages, level + 1);
+    const subList = buildChildList(path, pages, level + 1, maxLevel);
     if (subList) li.append(subList);
     list.append(li);
   });
@@ -78,6 +87,9 @@ export default async function decorate(block) {
   const brand = rows[0];
   const brandLink = rows[1];
   const links = rows[2];
+  const subnavLevels = readSubnavLevels(rows[3]);
+  // The Subnavigation Levels row is a setting only, not navbar content.
+  rows[3]?.remove();
 
   const isEditor = !!block.closest('[data-aue-resource]');
   if (isEditor) {
@@ -170,17 +182,17 @@ export default async function decorate(block) {
     if (topList && !isEditor && !onAuthor && sitePages.length) {
       let pages = [];
       try {
-        // Only pages that can appear in the subnavigation (up to two levels below a site link).
+        // Only pages that can appear in the subnavigation (up to `subnavLevels` below a site link).
         pages = (await fetchIndexPages()).filter(({ path }) => sitePages.some((sitePage) => {
           const prefix = `${sitePage.path}/`;
-          return path.startsWith(prefix) && path.slice(prefix.length).split('/').length <= MAX_LEVEL - 1;
+          return path.startsWith(prefix) && path.slice(prefix.length).split('/').length <= subnavLevels;
         }));
         pages = await fillMissingTitles(pages);
       } catch (e) {
         pages = [];
       }
       sitePages.forEach(({ li, path }) => {
-        const subList = buildChildList(path, pages, 2);
+        const subList = buildChildList(path, pages, 2, subnavLevels + 1);
         if (subList) li.append(subList);
       });
     }
@@ -193,7 +205,7 @@ export default async function decorate(block) {
     const getControl = (li) => li.querySelector(':scope > a, :scope > button');
 
     const annotate = (list, level) => {
-      if (!list || level > 3) return;
+      if (!list || level > MAX_LEVEL) return;
       list.classList.add('xe-navbar-level', `xe-navbar-level-${level}`);
       [...list.children].forEach((li) => {
         if (li.tagName !== 'LI') return;
@@ -242,11 +254,30 @@ export default async function decorate(block) {
       });
     };
 
+    const desktopMq = window.matchMedia('(min-width: 900px)');
+
+    // Sub menus open to the right of their parent. With three levels of subnavigation they can run
+    // past the right edge of the window, so open them towards the left instead when they don't fit.
+    const placeFlyout = (li) => {
+      const subList = li.querySelector(':scope > ul');
+      if (!subList) return;
+      subList.classList.remove('xe-navbar-flyout-left');
+      if (!desktopMq.matches) return;
+      // Once a sub menu opens towards the left, every level below it keeps opening to the left so
+      // the menus don't zigzag back to the right.
+      const parentOpensLeft = li.parentElement.classList.contains('xe-navbar-flyout-left');
+      if (parentOpensLeft
+        || subList.getBoundingClientRect().right > document.documentElement.clientWidth) {
+        subList.classList.add('xe-navbar-flyout-left');
+      }
+    };
+
     const openMenu = (li) => {
       const control = getControl(li);
       [...li.parentElement.children].forEach((sibling) => {
         if (sibling !== li) closeMenu(sibling);
       });
+      placeFlyout(li);
       li.classList.add('xe-navbar-open');
       if (control) control.setAttribute('aria-expanded', 'true');
     };
@@ -276,11 +307,10 @@ export default async function decorate(block) {
     links.querySelectorAll('.xe-navbar-has-children').forEach(setupToggle);
 
     // Arrow-key navigation (WAI-ARIA menu keyboard pattern). All links stay in the natural Tab
-    const desktopMq = window.matchMedia('(min-width: 900px)');
     const listLevel = (list) => {
-      if (list.classList.contains('xe-navbar-level-1')) return 1;
-      if (list.classList.contains('xe-navbar-level-2')) return 2;
-      if (list.classList.contains('xe-navbar-level-3')) return 3;
+      for (let level = 1; level <= MAX_LEVEL; level += 1) {
+        if (list.classList.contains(`xe-navbar-level-${level}`)) return level;
+      }
       return 0;
     };
     const itemsOf = (list) => [...list.children].filter((c) => c.tagName === 'LI');
