@@ -421,6 +421,28 @@
         "label": "Site Link",
         "description": "Select a page from your site. The page title becomes the navigation label.",
         "multi": false
+      },
+      {
+        "component": "select",
+        "name": "subnavLevels",
+        "value": "3",
+        "label": "Subnavigation Levels",
+        "description": "How many levels of child pages to show below each site link.",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "1 level",
+            "value": "1"
+          },
+          {
+            "name": "2 levels",
+            "value": "2"
+          },
+          {
+            "name": "3 levels",
+            "value": "3"
+          }
+        ]
       }
     ]
   },
