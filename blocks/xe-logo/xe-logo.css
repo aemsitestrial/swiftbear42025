@@ -1,0 +1,40 @@
+xe-logo {
+  --xe-logo-height: 48px;
+  --xe-logo-ratio: 4.5; /* source SVG is 720 x 160 */
+
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  height: var(--xe-logo-height);
+  aspect-ratio: var(--xe-logo-ratio);
+  max-width: 100%;
+  background-image: url('https://xe-logo--swiftbear42025--aemsitestrial.aem.page/media_151f47f7a2cf51bd07110968554d2fd313cdf91ba.svg');
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: contain;
+}
+
+/* sizes */
+xe-logo[size='sm'] {
+  --xe-logo-height: 32px;
+}
+
+xe-logo[size='md'] {
+  --xe-logo-height: 48px;
+}
+
+xe-logo[size='lg'] {
+  --xe-logo-height: 64px;
+}
+
+/* type: mark shows only the square brand mark at the left of the lockup */
+xe-logo[type='mark'] {
+  --xe-logo-ratio: 1;
+
+  background-size: auto 100%;
+}
+
+/* variant: inverse flips the dark logo for use on light backgrounds */
+xe-logo[variant='inverse'] {
+  filter: invert(1) hue-rotate(180deg);
+}
