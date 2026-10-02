@@ -167,6 +167,7 @@
                 "template": {
                   "name": "Teaser",
                   "model": "teaser",
+                  "filter": "teaser",
                   "textContent_text": "<h2>Enter a title</h2><p>...and body text here!</p>",
                   "textContent_cta": "/",
                   "textContent_ctaText": "Click me!"
@@ -185,6 +186,24 @@
                 "template": {
                   "name": "XE Banner",
                   "model": "xe-banner"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "XE Logo",
+          "id": "xe-logo",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "XE Logo",
+                  "model": "xe-logo",
+                  "variant": "primary",
+                  "size": "md",
+                  "type": "lockup"
                 }
               }
             }
