@@ -45,12 +45,6 @@
     ]
   },
   {
-    "id": "teaser",
-    "components": [
-      "xe-logo"
-    ]
-  },
-  {
     "id": "xe-navbar-v2",
     "components": [
       "xe-navbar-subnav"

@@ -9,10 +9,11 @@
             "template": {
               "name": "Teaser",
               "model": "teaser",
-              "filter": "teaser",
               "textContent_text": "<h2>Enter a title</h2><p>...and body text here!</p>",
               "textContent_cta": "/",
-              "textContent_ctaText": "Click me!"
+              "textContent_ctaText": "Click me!",
+              "logo_variant": "primary",
+              "logo_type": "lockup"
             }
           }
         }
@@ -71,16 +72,43 @@
                     "name": "textContent_ctaText",
                     "label": "CTA label",
                     "valueType": "string"
+                },
+                {
+                    "component": "select",
+                    "name": "logo_variant",
+                    "value": "primary",
+                    "label": "Logo variant",
+                    "valueType": "string",
+                    "options": [
+                        {
+                            "name": "Primary",
+                            "value": "primary"
+                        },
+                        {
+                            "name": "Inverse",
+                            "value": "inverse"
+                        }
+                    ]
+                },
+                {
+                    "component": "select",
+                    "name": "logo_type",
+                    "value": "lockup",
+                    "label": "Logo type",
+                    "valueType": "string",
+                    "options": [
+                        {
+                            "name": "Lockup",
+                            "value": "lockup"
+                        },
+                        {
+                            "name": "Mark",
+                            "value": "mark"
+                        }
+                    ]
                 }
             ]
         }
     ],
-    "filters": [
-        {
-            "id": "teaser",
-            "components": [
-                "xe-logo"
-            ]
-        }
-    ]
+    "filters": []
 }

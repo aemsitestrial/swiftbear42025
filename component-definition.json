@@ -167,10 +167,11 @@
                 "template": {
                   "name": "Teaser",
                   "model": "teaser",
-                  "filter": "teaser",
                   "textContent_text": "<h2>Enter a title</h2><p>...and body text here!</p>",
                   "textContent_cta": "/",
-                  "textContent_ctaText": "Click me!"
+                  "textContent_ctaText": "Click me!",
+                  "logo_variant": "primary",
+                  "logo_type": "lockup"
                 }
               }
             }
