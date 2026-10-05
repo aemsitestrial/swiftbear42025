@@ -267,6 +267,40 @@
         "name": "textContent_ctaText",
         "label": "CTA label",
         "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "logo_variant",
+        "value": "primary",
+        "label": "Logo variant",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Inverse",
+            "value": "inverse"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "logo_type",
+        "value": "lockup",
+        "label": "Logo type",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Lockup",
+            "value": "lockup"
+          },
+          {
+            "name": "Mark",
+            "value": "mark"
+          }
+        ]
       }
     ]
   },

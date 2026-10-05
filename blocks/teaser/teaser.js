@@ -1,11 +1,16 @@
-import { loadBlock } from '../../scripts/aem.js';
+import { renderBlock } from '../../scripts/utils.js';
 
 export default async function decorate(block) {
-  // The teaser's own fields render as the first two rows (image, text). Any rows after that are
-  // child items, and the teaser filter only allows xe-logo children.
-  const logoRows = [...block.children].slice(2);
-  await Promise.all(logoRows.map((row) => {
-    row.dataset.blockName = 'xe-logo';
-    return loadBlock(row);
-  }));
+  // Rows: image (+ alt), the textContent_* group, then the logo_* group (variant, type).
+  const [, , logoRow] = block.children;
+  const [logoVariant, logoType] = [...(logoRow?.querySelectorAll('p') || [])]
+    .map((p) => p.textContent.trim());
+  // The logo settings are passed to xe-logo, so their row shouldn't render as text.
+  logoRow?.remove();
+
+  await renderBlock(block, 'xe-logo', {
+    variant: logoVariant || 'primary',
+    size: 'md',
+    type: logoType || 'lockup',
+  }, 'afterbegin');
 }

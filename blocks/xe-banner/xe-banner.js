@@ -1,4 +1,11 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { getBlockProps } from '../../scripts/utils.js';
+
+// Key order matches the row order of the xe-banner model (the bannerAction_* fields share one row).
+// When rendered from code, bannerAction is an object: { label, link, icon }.
+const DEFAULTS = {
+  bannerIcon: '', bannerHeading: '', bannerMessage: '', bannerAction: {},
+};
 
 const text = (el) => el?.textContent.trim() || '';
 
@@ -69,8 +76,9 @@ const readAction = (cell) => {
 };
 
 export default function decorate(block) {
-  const [iconCell, headingCell, messageCell, actionCell] = [...block.children]
+  const [, headingCell, messageCell, actionCell] = [...block.children]
     .map((row) => row.firstElementChild);
+  const props = getBlockProps(block, DEFAULTS);
 
   const banner = document.createElement('xe-banner');
   banner.setAttribute('variant', 'message');
@@ -83,25 +91,28 @@ export default function decorate(block) {
   column.setAttribute('heading-level', '2');
   banner.append(column);
 
-  const icon = text(iconCell);
-  if (icon) {
-    column.append(createIcon(icon, { slot: 'icon', size: 'lg' }));
+  if (props.bannerIcon) {
+    column.append(createIcon(props.bannerIcon, { slot: 'icon', size: 'lg' }));
   }
 
-  const heading = text(headingCell);
-  if (heading) {
+  if (props.bannerHeading) {
     const span = document.createElement('span');
     span.slot = 'heading';
-    span.textContent = heading;
+    span.textContent = props.bannerHeading;
     moveFieldInstrumentation(headingCell, span);
     column.append(span);
   }
 
-  if (text(messageCell)) {
+  if (props.bannerMessage) {
     const message = document.createElement('div');
     message.slot = 'message';
-    moveFieldInstrumentation(messageCell, message);
-    message.append(...messageCell.childNodes);
+    if (messageCell) {
+      // Authored rich text: keep the markup instead of the plain-text prop value.
+      moveFieldInstrumentation(messageCell, message);
+      message.append(...messageCell.childNodes);
+    } else {
+      message.textContent = props.bannerMessage;
+    }
     // Unwrap paragraphs, keeping a line break between consecutive ones.
     message.querySelectorAll('p').forEach((p, i) => {
       if (i > 0) p.before(document.createElement('br'));
@@ -110,7 +121,10 @@ export default function decorate(block) {
     column.append(message);
   }
 
-  const action = readAction(actionCell);
+  // Authored action rows come through as text; props from code are already { label, link, icon }.
+  const action = typeof props.bannerAction === 'string'
+    ? readAction(actionCell)
+    : props.bannerAction;
   if (action.label && action.link) {
     const button = document.createElement('xe-button');
     button.slot = 'action';
