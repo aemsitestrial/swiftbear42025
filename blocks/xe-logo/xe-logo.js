@@ -8,11 +8,16 @@ import { getBlockProps } from '../../scripts/utils.js';
 // Key order matches the field (cell) order of the xe-logo model.
 const DEFAULTS = { variant: 'primary', size: 'md', type: 'lockup' };
 
-export default function decorateLogo(block, props = DEFAULTS) {
+export function decorateLogo(props = {}) {
   const xeLogo = document.createElement('xe-logo');
-  Object.entries(getBlockProps(block, props)).forEach(([name, value]) => {
-    xeLogo.setAttribute(name, String(value).toLowerCase());
+  Object.entries(DEFAULTS).forEach(([name, fallback]) => {
+    xeLogo.setAttribute(name, String(props[name] || fallback).toLowerCase());
   });
+  return xeLogo;
+}
+
+export default function decorate(block) {
+  const xeLogo = decorateLogo(getBlockProps(block, DEFAULTS));
   // Keep the editor instrumentation so the Universal Editor can still select the logo.
   moveInstrumentation(block, xeLogo);
   block.replaceWith(xeLogo);
