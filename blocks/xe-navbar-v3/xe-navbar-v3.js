@@ -1,4 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { renderBlock } from '../../scripts/utils.js';
 
 const QUERY_INDEX = '/query-index.json';
 const INDEX_PAGE_SIZE = 500;
@@ -84,17 +85,28 @@ const fillMissingTitles = (pages) => Promise.all(pages.map(async (page) => {
 
 export default async function decorate(block) {
   const rows = [...block.children];
-  const brand = rows[0];
-  const brandLink = rows[1];
-  const links = rows[2];
-  const subnavLevels = readSubnavLevels(rows[3]);
+  // Site Link and Subnavigation Levels are always the last two rows. Navbars rendered with the
+  // older model still have Site Brand image and link rows ahead of them, which are no longer used.
+  const [links, subnavRow] = rows.slice(-2);
+  rows.slice(0, -2).forEach((row) => row.remove());
+  const subnavLevels = readSubnavLevels(subnavRow);
   // The Subnavigation Levels row is a setting only, not navbar content.
-  rows[3]?.remove();
+  subnavRow?.remove();
 
   const isEditor = !!block.closest('[data-aue-resource]');
   if (isEditor) {
     block.classList.add('xe-navbar-v3-editor');
   }
+
+  // The brand is not authored: it always renders the xe-logo block ahead of the links.
+  const brand = document.createElement('div');
+  brand.className = 'xe-navbar-brand';
+  block.prepend(brand);
+  const logoReady = renderBlock(brand, 'xe-logo', {
+    variant: 'primary',
+    size: 'md',
+    type: 'lockup',
+  });
 
   // AEM author serves pages from their repository path under /content.
   const onAuthor = window.location.pathname.startsWith('/content/');
@@ -136,40 +148,7 @@ export default async function decorate(block) {
       }));
     });
   }
-  await Promise.all(titleRequests);
-
-  if (brand) {
-    brand.classList.add('xe-navbar-brand');
-    brand.dataset.blockName = 'xe-navbar-brand';
-  }
-
-  if (brandLink) {
-    brandLink.classList.add('xe-navbar-brandLink');
-    brandLink.dataset.blockName = 'xe-navbar-brandLink';
-
-    const brandAnchor = brandLink.querySelector('a');
-    const picture = brand?.querySelector('picture');
-
-    if (brandAnchor && picture && brand) {
-      brandAnchor.textContent = '';
-      brandAnchor.classList.remove('button');
-
-      // Move the picture into the existing anchor.
-      brandAnchor.appendChild(picture);
-
-      // Move the anchor into the brand container.
-      brand.appendChild(brandAnchor);
-
-      // Remove the div sibling before the anchor.
-      const previousSibling = brandAnchor.previousElementSibling;
-      if (previousSibling?.tagName === 'DIV') {
-        previousSibling.remove();
-      }
-
-      // Remove the original brandLink container.
-      brandLink.remove();
-    }
-  }
+  await Promise.all([...titleRequests, logoReady]);
 
   if (links) {
     links.classList.add('xe-navbar-links');
@@ -329,70 +308,15 @@ export default async function decorate(block) {
       requestAnimationFrame(() => focusAnchor(target));
     };
 
-    // The brand/logo link sits to the left of the navigation links in the desktop top row. Pull it
-    // into the arrow-key sequence so Left/Right (and Home/End) move between the brand and the links
-    // as one continuous row rather than the brand only being reachable by Tab.
-    const brandAnchor = brand?.querySelector('a');
-    const topAnchorSequence = () => {
-      const seq = [];
-      if (brandAnchor) seq.push(brandAnchor);
-      if (topList) {
-        itemsOf(topList).forEach((topLi) => {
-          const control = getControl(topLi);
-          if (control) seq.push(control);
-        });
-      }
-      return seq;
-    };
-    // Sibling movement across a flat row of controls (anchors and toggle buttons), wrapping at the
-    // ends. Returns true when it handled the key so the caller can stop. Used for the shared brand
-    // + top-links row on desktop. `key` is passed explicitly so callers can remap (e.g. treat Down
-    // as Right from the brand).
-    const moveAcrossRow = (event, seq, key = event.key) => {
-      const i = seq.indexOf(event.target.closest('a, button'));
-      if (i < 0) return false;
-      switch (key) {
-        case 'ArrowRight':
-          event.preventDefault();
-          seq[(i + 1) % seq.length].focus();
-          return true;
-        case 'ArrowLeft':
-          event.preventDefault();
-          seq[(i - 1 + seq.length) % seq.length].focus();
-          return true;
-        case 'Home':
-          event.preventDefault();
-          seq[0].focus();
-          return true;
-        case 'End':
-          event.preventDefault();
-          seq[seq.length - 1].focus();
-          return true;
-        default:
-          return false;
-      }
-    };
-
-    // Listen on the whole block (not just the links list) so key presses on the brand link are
-    // covered too.
-    block.addEventListener('keydown', (event) => {
+    links.addEventListener('keydown', (event) => {
       const keys = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'];
       if (!keys.includes(event.key)) return;
 
       const anchor = event.target.closest('a, button');
-      if (!anchor || !block.contains(anchor)) return;
+      if (!anchor || !links.contains(anchor)) return;
 
       const desktop = desktopMq.matches;
 
-      if (brandAnchor && anchor === brandAnchor) {
-        if (desktop) {
-          const rowKey = { ArrowDown: 'ArrowRight', ArrowUp: 'ArrowLeft' }[event.key] || event.key;
-          moveAcrossRow(event, topAnchorSequence(), rowKey);
-        }
-        return;
-      }
-
-      if (!links.contains(anchor)) return;
       const li = anchor.closest('li');
       const list = li?.parentElement;
       if (!list) return;
@@ -404,8 +328,6 @@ export default async function decorate(block) {
       const hasChildren = li.classList.contains('xe-navbar-has-children');
       // The top level is horizontal only on desktop; in the mobile drawer it stacks vertically.
       const topHorizontal = level === 1 && desktop;
-
-      if (topHorizontal && moveAcrossRow(event, topAnchorSequence())) return;
 
       const nextKey = topHorizontal ? 'ArrowRight' : 'ArrowDown';
       const prevKey = topHorizontal ? 'ArrowLeft' : 'ArrowUp';
@@ -476,8 +398,7 @@ export default async function decorate(block) {
       hamburger.setAttribute('aria-controls', links.id);
       hamburger.innerHTML = '<span class="xe-navbar-hamburger-box" aria-hidden="true"><span class="xe-navbar-hamburger-inner"></span></span>';
 
-      if (brand) brand.after(hamburger);
-      else block.prepend(hamburger);
+      brand.after(hamburger);
 
       const mobileMq = window.matchMedia('(max-width: 899px)');
       const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), '
