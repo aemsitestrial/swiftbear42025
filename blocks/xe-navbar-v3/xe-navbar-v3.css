@@ -29,15 +29,9 @@ main > .section > .xe-navbar-v3-wrapper {
 	appearance: none;
 }
 
-.xe-navbar-brand a {
-	display: inline-block;
-}
-
-.xe-navbar-brand img {
-	width: 100%;
-	max-width: 180px;
-	position: relative;
-	top: 4px;
+.xe-navbar-brand {
+	display: flex;
+	align-items: center;
 }
 
 .xe-navbar-hamburger {
