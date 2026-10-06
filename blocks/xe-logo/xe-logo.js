@@ -20,8 +20,5 @@ export function decorateLogo(props = {}) {
 }
 
 export default function decorate(block) {
-  const xeLogo = decorateLogo(getBlockProps(block, DEFAULTS));
-  // Keep the editor instrumentation so the Universal Editor can still select the logo.
-  moveInstrumentation(block, xeLogo);
-  block.replaceWith(xeLogo);
+  block.replaceChildren(decorateLogo(getBlockProps(block, DEFAULTS)));
 }
