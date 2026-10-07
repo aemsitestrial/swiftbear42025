@@ -7,18 +7,15 @@ import { getBlockProps } from '../../scripts/utils.js';
 // Key order matches the field (cell) order of the xe-logo model.
 const DEFAULTS = { variant: 'primary', size: 'md', type: 'lockup' };
 
-export function decorateLogo(props = {}) {
+export function buildLogo(props = {}) {
   const xeLogo = document.createElement('xe-logo');
   Object.entries(DEFAULTS).forEach(([name, fallback]) => {
     xeLogo.setAttribute(name, String(props[name] || fallback).toLowerCase());
   });
+  console.log(xeLogo);
   return xeLogo;
 }
 
-export function buildLogo(block, props = {}) {
-  block.replaceChildren(decorateLogo({ ...getBlockProps(block, DEFAULTS), ...props }));
-}
-
-export default function decorate(block) {
-  block.replaceChildren(decorateLogo(getBlockProps(block, DEFAULTS)));
+export default function decorate(block, props = {}) {
+  block.replaceChildren(buildLogo({ ...getBlockProps(block, DEFAULTS), ...props }));
 }
