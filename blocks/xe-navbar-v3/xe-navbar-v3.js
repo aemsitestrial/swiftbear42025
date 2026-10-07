@@ -1,5 +1,6 @@
+import { loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { renderBlock } from '../../scripts/utils.js';
+import { decorateLogo } from '../xe-logo/xe-logo.js';
 
 const QUERY_INDEX = '/query-index.json';
 const INDEX_PAGE_SIZE = 500;
@@ -98,15 +99,13 @@ export default async function decorate(block) {
     block.classList.add('xe-navbar-v3-editor');
   }
 
-  // The brand is not authored: it always renders the xe-logo block ahead of the links.
+  // The brand is not authored: it always renders the xe-logo ahead of the links.
   const brand = document.createElement('div');
   brand.className = 'xe-navbar-brand';
+  brand.append(decorateLogo({ variant: 'primary', size: 'md', type: 'lockup' }));
   block.prepend(brand);
-  const logoReady = renderBlock(brand, 'xe-logo', {
-    variant: 'primary',
-    size: 'md',
-    type: 'lockup',
-  });
+  // Wait for the logo styles with the rest of the navbar so the logo never shows unstyled.
+  const logoReady = loadCSS(`${window.hlx.codeBasePath}/blocks/xe-logo/xe-logo.css`).catch(() => {});
 
   // AEM author serves pages from their repository path under /content.
   const onAuthor = window.location.pathname.startsWith('/content/');

@@ -2,18 +2,19 @@
  * XE Logo <xe-logo size="md" variant="primary" type="lockup"></xe-logo>
  */
 
-import { moveInstrumentation } from '../../scripts/scripts.js';
 import { getBlockProps } from '../../scripts/utils.js';
 
 // Key order matches the field (cell) order of the xe-logo model.
 const DEFAULTS = { variant: 'primary', size: 'md', type: 'lockup' };
 
-export default function decorate(block) {
+export function decorateLogo(props = {}) {
   const xeLogo = document.createElement('xe-logo');
-  Object.entries(getBlockProps(block, DEFAULTS)).forEach(([name, value]) => {
-    xeLogo.setAttribute(name, String(value).toLowerCase());
+  Object.entries(DEFAULTS).forEach(([name, fallback]) => {
+    xeLogo.setAttribute(name, String(props[name] || fallback).toLowerCase());
   });
-  // Keep the editor instrumentation so the Universal Editor can still select the logo.
-  moveInstrumentation(block, xeLogo);
-  block.replaceWith(xeLogo);
+  return xeLogo;
+}
+
+export default function decorate(block) {
+  block.replaceChildren(decorateLogo(getBlockProps(block, DEFAULTS)));
 }
