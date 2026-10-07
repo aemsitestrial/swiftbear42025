@@ -9,6 +9,7 @@ header {
   top: 0;
   z-index: 1000;
 }
+
 .header-wrapper img {
   height: auto;
 }
