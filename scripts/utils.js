@@ -1,3 +1,6 @@
+// Props passed to blocks rendered from code, keyed by the block element.
+const blockProps = new WeakMap();
+
 /**
  * Reads a block's properties: props passed to renderBlock() win, then the authored cells
  * (one row per field, in model order), then the defaults.
