@@ -12,7 +12,6 @@ export function buildLogo(props = {}) {
   Object.entries(DEFAULTS).forEach(([name, fallback]) => {
     xeLogo.setAttribute(name, String(props[name] || fallback).toLowerCase());
   });
-  console.log(xeLogo);
   return xeLogo;
 }
 
