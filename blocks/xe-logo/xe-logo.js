@@ -15,6 +15,10 @@ export function decorateLogo(props = {}) {
   return xeLogo;
 }
 
+export function buildLogo(block, props = {}) {
+  block.replaceChildren(decorateLogo({ ...getBlockProps(block, DEFAULTS), ...props }));
+}
+
 export default function decorate(block) {
   block.replaceChildren(decorateLogo(getBlockProps(block, DEFAULTS)));
 }
