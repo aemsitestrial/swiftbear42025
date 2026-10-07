@@ -202,9 +202,8 @@
                 "template": {
                   "name": "XE Logo",
                   "model": "xe-logo",
-                  "variant": "primary",
-                  "size": "md",
-                  "type": "lockup"
+                  "logo_variant": "primary",
+                  "logo_type": "lockup"
                 }
               }
             }
