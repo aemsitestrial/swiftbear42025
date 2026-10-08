@@ -10,9 +10,9 @@
             "template": {
               "name": "XE Logo",
               "model": "xe-logo",
-              "variant": "primary",
-              "size": "md",
-              "type": "lockup"
+              "logo_variant": "primary",
+              "logo_size": "md",
+              "logo_type": "lockup"
             }
           }
         }
@@ -25,7 +25,7 @@
       "fields": [
         {
           "component": "select",
-          "name": "variant",
+          "name": "logo_variant",
           "value": "primary",
           "label": "Variant",
           "valueType": "string",
@@ -42,7 +42,7 @@
         },
         {
           "component": "select",
-          "name": "size",
+          "name": "logo_size",
           "value": "md",
           "label": "Size",
           "valueType": "string",
@@ -63,7 +63,7 @@
         },
         {
           "component": "select",
-          "name": "type",
+          "name": "logo_type",
           "value": "lockup",
           "label": "Type",
           "valueType": "string",

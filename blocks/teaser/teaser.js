@@ -1,12 +1,14 @@
-import { decorateLogo } from '../xe-logo/xe-logo.js';
+import decorateLogo from '../xe-logo/xe-logo.js';
 
 export default function decorate(block) {
-  // Rows: image (+ alt), the textContent_* group, then the logo_* group (variant, type).
-  const [, , logoRow] = block.children;
-  const [variant, type] = [...(logoRow?.querySelectorAll('p') || [])]
-    .map((p) => p.textContent.trim());
-  // The logo settings are passed to xe-logo, so their row shouldn't render as text.
-  logoRow?.remove();
+  // Get the logo row (3rd row)
+  const logoRow = block.children[2];
 
-  block.append(decorateLogo({ variant, type }));
+  decorateLogo(logoRow, { size: 'md' });
+
+  // The logo is not authored: it always renders the xe-logo after the teaser content.
+  // const logo = document.createElement('div');
+  // logo.className = 'teaser-logo';
+  // decorateLogo(logo, { variant: 'primary', size: 'md', type: 'lockup' });
+  // block.append(logo);
 }
