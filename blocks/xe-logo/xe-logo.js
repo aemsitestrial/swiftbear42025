@@ -16,5 +16,5 @@ export function buildLogo(props = {}) {
 }
 
 export default function decorate(block, props = {}) {
-  block.replaceChildren(buildLogo({ ...getBlockProps(block, DEFAULTS), ...props }));
+  block.replaceChildren(buildLogo(getBlockProps(block, DEFAULTS, props)));
 }
