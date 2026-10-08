@@ -7,7 +7,7 @@ import { getBlockProps } from '../../scripts/utils.js';
 
 // Key order matches the field (cell) order of the xe-hyperlink model.
 const DEFAULTS = {
-  text: '', href: '', trailingIcon: 'false', linkType: '', target: '',
+  text: 'Hyperlink', href: '#', trailingIcon: 'false', linkType: 'auto', target: '',
 };
 
 export function buildHyperlink(props = {}) {

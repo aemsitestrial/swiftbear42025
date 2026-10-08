@@ -378,7 +378,7 @@
       {
         "component": "aem-content",
         "name": "link_href",
-        "label": "Href",
+        "label": "URL",
         "valueType": "string"
       },
       {
@@ -391,7 +391,7 @@
       {
         "component": "select",
         "name": "link_type",
-        "label": "Link Type",
+        "label": "Type",
         "valueType": "string",
         "value": "auto",
         "options": [
