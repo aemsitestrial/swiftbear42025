@@ -367,6 +367,23 @@
     ]
   },
   {
+    "id": "xe-hyperlink",
+    "fields": [
+      {
+        "component": "text",
+        "name": "link_text",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "link_href",
+        "label": "Href",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "xe-logo",
     "fields": [
       {
