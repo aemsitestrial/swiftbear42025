@@ -92,6 +92,18 @@
                 },
                 {
                     "component": "select",
+                    "name": "logo_size",
+                    "value": "md",
+                    "label": "Logo size",
+                    "valueType": "string",
+                    "options": [
+                        { "name": "Small", "value": "sm" },
+                        { "name": "Medium", "value": "md" },
+                        { "name": "Large", "value": "lg" }
+                    ]
+                },
+                {
+                    "component": "select",
                     "name": "logo_type",
                     "value": "lockup",
                     "label": "Logo type",
