@@ -203,6 +203,7 @@
                   "name": "XE Logo",
                   "model": "xe-logo",
                   "logo_variant": "primary",
+                  "logo_size": "md",
                   "logo_type": "lockup"
                 }
               }
