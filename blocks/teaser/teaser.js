@@ -4,7 +4,7 @@ export default function decorate(block) {
   // Get the logo row (3rd row)
   const logoRow = block.children[2];
 
-  decorateLogo(logoRow, { size: 'md' });
+  decorateLogo(logoRow);
 
   // The logo is not authored: it always renders the xe-logo after the teaser content.
   // const logo = document.createElement('div');
