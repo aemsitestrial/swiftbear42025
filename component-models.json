@@ -380,6 +380,59 @@
         "name": "link_href",
         "label": "Href",
         "valueType": "string"
+      },
+      {
+        "component": "boolean",
+        "name": "link_trailingIcon",
+        "label": "Trailing Icon",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "select",
+        "name": "link_type",
+        "label": "Link Type",
+        "valueType": "string",
+        "value": "auto",
+        "options": [
+          {
+            "name": "Auto",
+            "value": "auto"
+          },
+          {
+            "name": "External",
+            "value": "external"
+          },
+          {
+            "name": "Internal",
+            "value": "internal"
+          },
+          {
+            "name": "Download",
+            "value": "download"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "link_target",
+        "label": "Target",
+        "valueType": "string",
+        "value": "",
+        "options": [
+          {
+            "name": "Default",
+            "value": ""
+          },
+          {
+            "name": "New Tab (_blank)",
+            "value": "_blank"
+          },
+          {
+            "name": "Same Tab (_self)",
+            "value": "_self"
+          }
+        ]
       }
     ]
   },
