@@ -440,27 +440,27 @@
     "id": "xe-hyperlink",
     "fields": [
       {
-        "component": "text",
-        "name": "link_text",
-        "label": "Text",
-        "valueType": "string"
-      },
-      {
         "component": "aem-content",
-        "name": "link_href",
+        "name": "link_cta",
         "label": "URL",
         "valueType": "string"
       },
       {
+        "component": "text",
+        "name": "link_ctaText",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
         "component": "boolean",
-        "name": "link_trailingIcon",
+        "name": "classes_trailingIcon",
         "label": "Trailing Icon",
         "valueType": "boolean",
         "value": false
       },
       {
         "component": "select",
-        "name": "link_type",
+        "name": "classes_type",
         "label": "Type",
         "valueType": "string",
         "value": "auto",
@@ -485,7 +485,7 @@
       },
       {
         "component": "select",
-        "name": "link_target",
+        "name": "classes_target",
         "label": "Target",
         "valueType": "string",
         "value": "",

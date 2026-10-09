@@ -222,11 +222,11 @@
                 "template": {
                   "name": "XE Hyperlink",
                   "model": "xe-hyperlink",
-                  "link_text": "Hyperlink",
-                  "link_href": "#",
-                  "link_trailingIcon": false,
-                  "link_type": "auto",
-                  "link_target": ""
+                  "link_cta": "#",
+                  "link_ctaText": "Hyperlink",
+                  "classes_trailingIcon": false,
+                  "classes_type": "auto",
+                  "classes_target": ""
                 }
               }
             }
